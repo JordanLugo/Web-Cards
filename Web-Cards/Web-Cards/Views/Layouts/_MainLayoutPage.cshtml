@@ -6,8 +6,15 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
+    <nav>
+        <ul>
+            <li><a href="/Home/Index">Home</a></li>
+        </ul>
+    </nav>
+    <main>
         @RenderBody()
-    </div>
+    </main>
+    <hr />
+    <footer>&copy;JDawgs @DateTime.Now.Year</footer>
 </body>
 </html>
