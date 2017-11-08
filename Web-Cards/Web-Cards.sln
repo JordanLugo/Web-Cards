@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-Cards", "Web-Cards\Web-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-Cards.Tests", "Web-Cards.Tests\Web-Cards.Tests.csproj", "{C0B48180-A5B1-485D-BA0F-51C1060CB690}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardsLib", "CardsLib\CardsLib.csproj", "{742747B7-401B-4246-912D-0D4576418D08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarLib", "WarLib\WarLib.csproj", "{0E38D90D-019A-4AF8-B7BE-16D51A11E7A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742747B7-401B-4246-912D-0D4576418D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742747B7-401B-4246-912D-0D4576418D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742747B7-401B-4246-912D-0D4576418D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742747B7-401B-4246-912D-0D4576418D08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E38D90D-019A-4AF8-B7BE-16D51A11E7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E38D90D-019A-4AF8-B7BE-16D51A11E7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E38D90D-019A-4AF8-B7BE-16D51A11E7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E38D90D-019A-4AF8-B7BE-16D51A11E7A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

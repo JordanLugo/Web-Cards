@@ -7,12 +7,13 @@ namespace CardsLib
     /// </summary>
     public class Card
     {
-        public Card(string fullName, string suit, string value, int numValue)
+        public Card(string fullName, string suit, string value, int numValue, bool faceUp)
         {
             FullName = fullName;
             Suit = suit;
             Value = value;
             ValueInt = numValue;
+            FaceUp = faceUp;
         }
 
         /// <summary>
@@ -29,7 +30,15 @@ namespace CardsLib
         /// The value of the card, ie: Two, Five, Ten, King, Ace ...
         /// </summary>
         public string Value { get; set; }
-
+        
+        /// <summary>
+        /// The value of the card in points
+        /// </summary>
         public int ValueInt { get; set; }
+
+        /// <summary>
+        /// Whether the card is face down (false) or face up (true).
+        /// </summary>
+        public bool FaceUp { get; set; }
     }
 }
