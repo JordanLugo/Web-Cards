@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-Cards", "Web-Cards\Web-Cards.csproj", "{3AAE041C-F01B-4F32-A6F8-7D3870415F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-Cards.Tests", "Web-Cards.Tests\Web-Cards.Tests.csproj", "{C0B48180-A5B1-485D-BA0F-51C1060CB690}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AAE041C-F01B-4F32-A6F8-7D3870415F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAE041C-F01B-4F32-A6F8-7D3870415F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAE041C-F01B-4F32-A6F8-7D3870415F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAE041C-F01B-4F32-A6F8-7D3870415F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B48180-A5B1-485D-BA0F-51C1060CB690}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3C89ED3-6AE8-49FA-867A-5A1728FB4AC9}
+	EndGlobalSection
+EndGlobal
