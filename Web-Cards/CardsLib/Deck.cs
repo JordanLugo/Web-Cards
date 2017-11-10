@@ -23,8 +23,7 @@ namespace CardsLib
         {
             if (isWholeDeck)
             {
-                ResetDeck();
-            }
+                ResetDeck();            }
         }
 
         /// <summary>
