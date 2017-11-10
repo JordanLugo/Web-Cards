@@ -8,10 +8,15 @@
 */
 
 body {
+    background-color: black;
+    color: #EBB407;
 }
 
 nav {
     float: right;
+    max-width: 5%;
+    height: inherit;
+    background-color: black;
 }
 
 hr {
@@ -20,18 +25,32 @@ hr {
 
 nav > ul > li {
     text-decoration: none;
+    list-style-type: none;
 }
 nav > ul > li > a {
     text-decoration: none;
+    font-size: 24px;
 }
 
 nav > ul > li > a:link,
 nav > ul > li > a:visited {
     text-decoration: none;
+    color: #EBB407;
 }
 
 nav > ul > li > a:hover,
 nav > ul > li > a:active {
-    border: 1px solid blue;
+    border: 1px solid #EBB407;
     border-radius: 5px;
 }
+
+.mainBody {
+    background-color: #1C7A0A;
+    color: #EBB407;
+    margin: 10px;
+    margin-right: 5%;
+}
+.mainBody > p{
+    color: black;
+}
+
