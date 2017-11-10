@@ -9,7 +9,6 @@ namespace SolitaireLib
 {
     public class SolitaireSetup
     {
-
         /// <summary>
         /// This sets up and starts a game of War
         /// </summary>
