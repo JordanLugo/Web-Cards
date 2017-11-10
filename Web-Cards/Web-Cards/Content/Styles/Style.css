@@ -1,2 +1,37 @@
-﻿body {
+﻿/*
+    Color scheme
+    Gold:       #EBB407
+    Black:      #000000
+    Red:        #BA220D
+    Darker Red: #7D2107
+    Green:      #1C7A0A
+*/
+
+body {
+}
+
+nav {
+    float: right;
+}
+
+hr {
+    clear: both;
+}
+
+nav > ul > li {
+    text-decoration: none;
+}
+nav > ul > li > a {
+    text-decoration: none;
+}
+
+nav > ul > li > a:link,
+nav > ul > li > a:visited {
+    text-decoration: none;
+}
+
+nav > ul > li > a:hover,
+nav > ul > li > a:active {
+    border: 1px solid blue;
+    border-radius: 5px;
 }
