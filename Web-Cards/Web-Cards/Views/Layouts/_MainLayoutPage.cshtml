@@ -4,17 +4,17 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link href="~/Content/Styles/Style.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <nav>
+    <nav class="navbar-main">
         <ul>
-            <li><a href="/Home/Index">Home</a></li>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
         </ul>
     </nav>
-    <main>
+    @Html.Partial("_LoginLogoutPartial")
+    <div>
         @RenderBody()
-    </main>
-    <hr />
-    <footer>&copy;JDawgs @DateTime.Now.Year</footer>
+    </div>
 </body>
 </html>
