@@ -23,61 +23,7 @@ namespace CardsLib
         {
             if (isWholeDeck)
             {
-                Cards.Add(new Card("Ace of Spades",     "Spades",   "Ace",      1, false));
-                Cards.Add(new Card("Two of Spades",     "Spades",   "Two",      2, false));
-                Cards.Add(new Card("Three of Spades",   "Spades",   "Three",    3, false));
-                Cards.Add(new Card("Four of Spades",    "Spades",   "Four",     4, false));
-                Cards.Add(new Card("Five of Spades",    "Spades",   "Five",     5, false));
-                Cards.Add(new Card("Six of Spades",     "Spades",   "Six",      6, false));
-                Cards.Add(new Card("Seven of Spades",   "Spades",   "Seven",    7, false));
-                Cards.Add(new Card("Eight of Spades",   "Spades",   "Eight",    8, false));
-                Cards.Add(new Card("Nine of Spades",    "Spades",   "Nine",     9, false));
-                Cards.Add(new Card("Ten of Spades",     "Spades",   "Ten",      10, false));
-                Cards.Add(new Card("Jack of Spades",    "Spades",   "Jack",     11, false));
-                Cards.Add(new Card("Queen of Spades",   "Spades",   "Queen",    12, false));
-                Cards.Add(new Card("King of Spades",    "Spades",   "King",     13, false));
-
-                Cards.Add(new Card("Ace of Diamonds",   "Diamonds", "Ace",      1, false));
-                Cards.Add(new Card("Two of Diamonds",   "Diamonds", "Two",      2, false));
-                Cards.Add(new Card("Three of Diamonds", "Diamonds", "Three",    3, false));
-                Cards.Add(new Card("Four of Diamonds",  "Diamonds", "Four",     4, false));
-                Cards.Add(new Card("Five of Diamonds",  "Diamonds", "Five",     5, false));
-                Cards.Add(new Card("Six of Diamonds",   "Diamonds", "Six",      6, false));
-                Cards.Add(new Card("Seven of Diamonds", "Diamonds", "Seven",    7, false));
-                Cards.Add(new Card("Eight of Diamonds", "Diamonds", "Eight",    8, false));
-                Cards.Add(new Card("Nine of Diamonds",  "Diamonds", "Nine",     9, false));
-                Cards.Add(new Card("Ten of Diamonds",   "Diamonds", "Ten",      10, false));
-                Cards.Add(new Card("Jack of Diamonds",  "Diamonds", "Jack",     11, false));
-                Cards.Add(new Card("Queen of Diamonds", "Diamonds", "Queen",    12, false));
-                Cards.Add(new Card("King of Diamonds",  "Diamonds", "King",     13, false));
-
-                Cards.Add(new Card("Ace of Clubs",      "Clubs",    "Ace",      1, false));
-                Cards.Add(new Card("Two of Clubs",      "Clubs",    "Two",      2, false));
-                Cards.Add(new Card("Three of Clubs",    "Clubs",    "Three",    3, false));
-                Cards.Add(new Card("Four of Clubs",     "Clubs",    "Four",     4, false));
-                Cards.Add(new Card("Five of Clubs",     "Clubs",    "Five",     5, false));
-                Cards.Add(new Card("Six of Clubs",      "Clubs",    "Six",      6, false));
-                Cards.Add(new Card("Seven of Clubs",    "Clubs",    "Seven",    7, false));
-                Cards.Add(new Card("Eight of Clubs",    "Clubs",    "Eight",    8, false));
-                Cards.Add(new Card("Nine of Clubs",     "Clubs",    "Nine",     9, false));
-                Cards.Add(new Card("Ten of Clubs",      "Clubs",    "Ten",      10, false));
-                Cards.Add(new Card("Jack of Clubs",     "Clubs",    "Jack",     11, false));
-                Cards.Add(new Card("Queen of Clubs",    "Clubs",    "Queen",    12, false));
-                Cards.Add(new Card("King of Clubs",     "Clubs",    "King",     13, false));
-
-                Cards.Add(new Card("Ace of Hearts",     "Hearts",   "Ace",      1, false));
-                Cards.Add(new Card("Two of Hearts",     "Hearts",   "Two",      2, false));
-                Cards.Add(new Card("Three of Hearts",   "Hearts",   "Three",    3, false));
-                Cards.Add(new Card("Four of Hearts",    "Hearts",   "Four",     4, false));
-                Cards.Add(new Card("Five of Hearts",    "Hearts",   "Five",     5, false));
-                Cards.Add(new Card("Six of Hearts",     "Hearts",   "Six",      6, false));
-                Cards.Add(new Card("Seven of Hearts",   "Hearts",   "Seven",    7, false));
-                Cards.Add(new Card("Eight of Hearts",   "Hearts",   "Eight",    8, false));
-                Cards.Add(new Card("Nine of Hearts",    "Hearts",   "Nine",     9, false));
-                Cards.Add(new Card("Ten of Hearts",     "Hearts",   "Ten",      10, false));
-                Cards.Add(new Card("Jack of Hearts",    "Hearts",   "Jack",     11, false));
-                Cards.Add(new Card("Queen of Hearts",   "Hearts",   "Queen",    12, false));
-                Cards.Add(new Card("King of Hearts",    "Hearts",   "King",     13, false));
+                ResetDeck();
             }
         }
 
@@ -105,6 +51,82 @@ namespace CardsLib
         {
             Cards.Add(from.Cards[0]);
             from.Cards.RemoveAt(0);
+        }
+
+        /// <summary>
+        /// Clears the Deck
+        /// </summary>
+        public void ClearDeck()
+        {
+            Cards.Clear();
+        }
+
+        /// <summary>
+        /// Clears and refills the deck back to a full standard deck 
+        /// </summary>
+        /// <param name="clear">A boolean that controlls whether RestDeck() empties the deck before refilling it.</param>
+        public void ResetDeck(bool clear = true)
+        {
+            if (clear)
+            {
+                ClearDeck();
+            }
+
+            Cards.Add(new Card("Ace of Spades", "Spades", "Ace", 1, false));
+            Cards.Add(new Card("Two of Spades", "Spades", "Two", 2, false));
+            Cards.Add(new Card("Three of Spades", "Spades", "Three", 3, false));
+            Cards.Add(new Card("Four of Spades", "Spades", "Four", 4, false));
+            Cards.Add(new Card("Five of Spades", "Spades", "Five", 5, false));
+            Cards.Add(new Card("Six of Spades", "Spades", "Six", 6, false));
+            Cards.Add(new Card("Seven of Spades", "Spades", "Seven", 7, false));
+            Cards.Add(new Card("Eight of Spades", "Spades", "Eight", 8, false));
+            Cards.Add(new Card("Nine of Spades", "Spades", "Nine", 9, false));
+            Cards.Add(new Card("Ten of Spades", "Spades", "Ten", 10, false));
+            Cards.Add(new Card("Jack of Spades", "Spades", "Jack", 11, false));
+            Cards.Add(new Card("Queen of Spades", "Spades", "Queen", 12, false));
+            Cards.Add(new Card("King of Spades", "Spades", "King", 13, false));
+
+            Cards.Add(new Card("Ace of Diamonds", "Diamonds", "Ace", 1, false));
+            Cards.Add(new Card("Two of Diamonds", "Diamonds", "Two", 2, false));
+            Cards.Add(new Card("Three of Diamonds", "Diamonds", "Three", 3, false));
+            Cards.Add(new Card("Four of Diamonds", "Diamonds", "Four", 4, false));
+            Cards.Add(new Card("Five of Diamonds", "Diamonds", "Five", 5, false));
+            Cards.Add(new Card("Six of Diamonds", "Diamonds", "Six", 6, false));
+            Cards.Add(new Card("Seven of Diamonds", "Diamonds", "Seven", 7, false));
+            Cards.Add(new Card("Eight of Diamonds", "Diamonds", "Eight", 8, false));
+            Cards.Add(new Card("Nine of Diamonds", "Diamonds", "Nine", 9, false));
+            Cards.Add(new Card("Ten of Diamonds", "Diamonds", "Ten", 10, false));
+            Cards.Add(new Card("Jack of Diamonds", "Diamonds", "Jack", 11, false));
+            Cards.Add(new Card("Queen of Diamonds", "Diamonds", "Queen", 12, false));
+            Cards.Add(new Card("King of Diamonds", "Diamonds", "King", 13, false));
+
+            Cards.Add(new Card("Ace of Clubs", "Clubs", "Ace", 1, false));
+            Cards.Add(new Card("Two of Clubs", "Clubs", "Two", 2, false));
+            Cards.Add(new Card("Three of Clubs", "Clubs", "Three", 3, false));
+            Cards.Add(new Card("Four of Clubs", "Clubs", "Four", 4, false));
+            Cards.Add(new Card("Five of Clubs", "Clubs", "Five", 5, false));
+            Cards.Add(new Card("Six of Clubs", "Clubs", "Six", 6, false));
+            Cards.Add(new Card("Seven of Clubs", "Clubs", "Seven", 7, false));
+            Cards.Add(new Card("Eight of Clubs", "Clubs", "Eight", 8, false));
+            Cards.Add(new Card("Nine of Clubs", "Clubs", "Nine", 9, false));
+            Cards.Add(new Card("Ten of Clubs", "Clubs", "Ten", 10, false));
+            Cards.Add(new Card("Jack of Clubs", "Clubs", "Jack", 11, false));
+            Cards.Add(new Card("Queen of Clubs", "Clubs", "Queen", 12, false));
+            Cards.Add(new Card("King of Clubs", "Clubs", "King", 13, false));
+
+            Cards.Add(new Card("Ace of Hearts", "Hearts", "Ace", 1, false));
+            Cards.Add(new Card("Two of Hearts", "Hearts", "Two", 2, false));
+            Cards.Add(new Card("Three of Hearts", "Hearts", "Three", 3, false));
+            Cards.Add(new Card("Four of Hearts", "Hearts", "Four", 4, false));
+            Cards.Add(new Card("Five of Hearts", "Hearts", "Five", 5, false));
+            Cards.Add(new Card("Six of Hearts", "Hearts", "Six", 6, false));
+            Cards.Add(new Card("Seven of Hearts", "Hearts", "Seven", 7, false));
+            Cards.Add(new Card("Eight of Hearts", "Hearts", "Eight", 8, false));
+            Cards.Add(new Card("Nine of Hearts", "Hearts", "Nine", 9, false));
+            Cards.Add(new Card("Ten of Hearts", "Hearts", "Ten", 10, false));
+            Cards.Add(new Card("Jack of Hearts", "Hearts", "Jack", 11, false));
+            Cards.Add(new Card("Queen of Hearts", "Hearts", "Queen", 12, false));
+            Cards.Add(new Card("King of Hearts", "Hearts", "King", 13, false));
         }
     }
 }

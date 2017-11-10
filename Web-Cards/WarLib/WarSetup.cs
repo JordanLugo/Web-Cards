@@ -11,8 +11,8 @@ namespace WarLib
     {
         private Deck Player1StoredCards = new Deck();
         private Deck Player2StoredCards = new Deck();
-        private Deck player1Cards;
-        private Deck player2Cards;
+        private Deck player1Cards = new Deck();
+        private Deck player2Cards = new Deck();
         /// <summary>
         /// The cards that player 1 has.
         /// </summary>
@@ -26,18 +26,27 @@ namespace WarLib
         /// </summary>
         public WarSetup()
         {
+            ResetNewGame();
+        }
+        /// <summary>
+        /// This resets everything used to begin a new game
+        /// </summary>
+        public void ResetNewGame()
+        {
             Deck TableCards = new Deck(true);
             TableCards.Cards.Where(x => x.ValueInt == 1).Select(x => x).ToList().ForEach(x => x.ValueInt = 14);
             TableCards.Shuffle();
 
-            player1Cards = new Deck();
-            player2Cards = new Deck();
+            player1Cards.ClearDeck();
+            player2Cards.ClearDeck();
 
             for (; TableCards.Cards.Count != 0;)
             {
                 player1Cards.Draw(TableCards);
                 player2Cards.Draw(TableCards);
             }
+
+            TableCards.ClearDeck();
         }
         /// <summary>
         /// Player 1 plays one card
@@ -106,7 +115,44 @@ namespace WarLib
             Player1LayCard(true);
 
             Player2LayCard(false);
-            Player2LayCard(true);
+            Player2LayCard(true);            
+        }
+        /// <summary>
+        /// This Method returns a formated dictionary to be used in a save state of a game
+        /// </summary>
+        /// <returns>A Dictionary(string List<Card>) that can easily saved and loaded back in.></returns>
+        public Dictionary<string, List<Card>> SaveState()
+        {
+            Dictionary<string, List<Card>> saveData = new Dictionary<string, List<Card>>();
+
+            saveData.Add("Player1HeldCards", Player1Cards.ToList());
+            saveData.Add("Player2HeldCards", Player2Cards.ToList());
+            saveData.Add("Player1StoredCards", Player1StoredCards.Cards.ToList());
+            saveData.Add("Player2StoredCards", Player2StoredCards.Cards.ToList());
+
+            return saveData;
+        }
+
+        public bool LoadState(Dictionary<string, List<Card>> data)
+        {
+            bool validInput = false;
+
+            if (data.Keys.Contains("Player1HeldCards") && data.Keys.Contains("Player2HeldCards") && data.Keys.Contains("Player1StoredCards") && data.Keys.Contains("Player2StoredCards"))
+            {
+                player1Cards.ClearDeck();
+                player2Cards.ClearDeck();
+                Player1StoredCards.ClearDeck();
+                Player2StoredCards.ClearDeck();
+
+                player1Cards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player1HeldCards")));
+                player2Cards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player2HeldCards")));
+                Player1StoredCards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player1StoredCards")));
+                Player2StoredCards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player2StoredCards")));
+
+                validInput = true;
+            }
+
+            return validInput;
         }
     }
 }
