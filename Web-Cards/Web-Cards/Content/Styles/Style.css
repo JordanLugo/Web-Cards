@@ -8,30 +8,55 @@
 */
 
 body {
-}
-
-nav {
-    float: right;
+    background-image: url("../Images/bg.png");
+    background-repeat: repeat;
 }
 
 hr {
     clear: both;
 }
 
+nav {
+    background-color: #7D2107;
+    margin: 20px;
+    float: right;
+    min-height: 100vh;
+}
+
 nav > ul > li {
     text-decoration: none;
+    margin: 40px 5px 40px 5px;
+    list-style-type: none;
+    margin-right:50px
+    
 }
 nav > ul > li > a {
     text-decoration: none;
+    border: 2px solid transparent;
+    border-top: 2px double #bbb;
+    border-right: 2px double #bbb;
+    padding: 5px 5px 5px 40px;
 }
 
 nav > ul > li > a:link,
 nav > ul > li > a:visited {
+    color: #bbb;
     text-decoration: none;
 }
 
 nav > ul > li > a:hover,
 nav > ul > li > a:active {
-    border: 1px solid blue;
-    border-radius: 5px;
+    color: #fff;
+    border-left: 2px double #fff;
+    border-bottom: 2px double #fff;
+    border-bottom-left-radius: 50px;
+}
+
+header {
+    border-bottom: 2px solid black;
+    border-radius: 50px;
+    padding: 5px;
+    margin: 10px;
+    display: block;
+    overflow: hidden;
 }

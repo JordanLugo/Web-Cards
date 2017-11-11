@@ -4,7 +4,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/Content/Styles/Style.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/Style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="~/Content/Scripts/Script.js"></script>
 </head>
 <body>
     <nav class="navbar-main">
@@ -12,9 +14,7 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
         </ul>
     </nav>
-    @*@Html.Partial("_LoginLogoutPartial")*@
-    <div>
-        @RenderBody()
+	<div class="mainBody">        @RenderBody()
     </div>
 </body>
 </html>
