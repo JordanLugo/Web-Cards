@@ -1,4 +1,5 @@
 ﻿using WarLib;
+using SolitaireLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
-        WarSetup war = new WarSetup();
         // GET: Home
         public ActionResult Index()
         {

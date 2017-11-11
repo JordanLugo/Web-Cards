@@ -123,6 +123,10 @@
       <Project>{742747B7-401B-4246-912D-0D4576418D08}</Project>
       <Name>CardsLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolitaireLib\SolitaireLib.csproj">
+      <Project>{e9bee378-a132-41dd-b1f5-36824387964e}</Project>
+      <Name>SolitaireLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WarLib\WarLib.csproj">
       <Project>{0e38d90d-019a-4af8-b7be-16d51a11e7a8}</Project>
       <Name>WarLib</Name>

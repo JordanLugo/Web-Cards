@@ -13,6 +13,7 @@ namespace WarLib
         private Deck Player2StoredCards = new Deck();
         private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
+        private Random rand = new Random();
         /// <summary>
         /// The cards that player 1 has.
         /// </summary>
@@ -33,20 +34,23 @@ namespace WarLib
         /// </summary>
         public void ResetNewGame()
         {
-            Deck TableCards = new Deck(true);
-            TableCards.Cards.Where(x => x.ValueInt == 1).Select(x => x).ToList().ForEach(x => x.ValueInt = 14);
-            TableCards.Shuffle();
+            Deck tableCards = new Deck(true);
+            tableCards.Cards.Where(x => x.ValueInt == 1).Select(x => x).ToList().ForEach(x => x.ValueInt = 14);
+            for (int shuffle = 0; shuffle < rand.Next(1, 25); shuffle++)
+            {
+                tableCards.Shuffle();
+            }
 
             player1Cards.ClearDeck();
             player2Cards.ClearDeck();
 
-            for (; TableCards.Cards.Count != 0;)
+            for (; tableCards.Cards.Count != 0;)
             {
-                player1Cards.Draw(TableCards);
-                player2Cards.Draw(TableCards);
+                player1Cards.Draw(tableCards);
+                player2Cards.Draw(tableCards);
             }
 
-            TableCards.ClearDeck();
+            tableCards.ClearDeck();
         }
         /// <summary>
         /// Player 1 plays one card
