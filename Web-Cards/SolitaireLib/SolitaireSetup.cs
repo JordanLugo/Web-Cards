@@ -91,7 +91,10 @@ namespace SolitaireLib
             if (validMove)
             {
                 switch (moveToPile.Cards.Last().Suit)
-                case ""
+                {
+                    case "":
+                        break;
+                }
             }
 
             return validMove;
