@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Layouts/_MainLayoutPage.cshtml";
+    ViewBag.Title = "Example Game Page";
+}
+
+@model WarLib.WarSetup
+
+    
+@Model.Player1Cards.First().FullName
+<img src="~/Content/Images/Cards/@( 
+    Model.Player1Cards.First().ValueInt > 10 ? Model.Player1Cards.First().Value : Model.Player1Cards.First().ValueInt+""
+ )_of_@(Model.Player1Cards.First().Suit).svg"/>
