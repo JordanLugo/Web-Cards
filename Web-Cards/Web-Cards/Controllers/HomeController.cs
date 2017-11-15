@@ -25,5 +25,11 @@ namespace Web_Cards.Controllers
         {
             return View();
         }
+
+        public ActionResult ExampleGame()
+        {
+            WarSetup w = new WarSetup();
+            return View(w);
+        }
     }
 }
