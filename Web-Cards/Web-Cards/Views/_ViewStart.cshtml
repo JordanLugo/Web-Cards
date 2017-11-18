@@ -1,3 +1,4 @@
 ﻿@{
-    Layout = "~/Views/Layouts/_MainLayoutPage.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Layouts/_MainLayoutPage.cshtml";
+    //otherwise ajax requests include the layout hahahhahahaha
 }

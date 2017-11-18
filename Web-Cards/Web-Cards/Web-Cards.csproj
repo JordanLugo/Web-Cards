@@ -314,6 +314,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Layouts\_MainLayoutPage.cshtml" />
     <Content Include="Views\Home\ExampleGame.cshtml" />
+    <Content Include="Views\Shared\Parti.cshtml" />
+    <Content Include="Views\Home\GetData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

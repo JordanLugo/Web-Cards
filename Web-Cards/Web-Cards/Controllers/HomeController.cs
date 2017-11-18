@@ -10,6 +10,7 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
+        static WarSetup w = new WarSetup();
         // GET: Home
         public ActionResult Index()
         {
@@ -28,7 +29,12 @@ namespace Web_Cards.Controllers
 
         public ActionResult ExampleGame()
         {
-            WarSetup w = new WarSetup();
+            
+            return View(w);
+        }
+
+        public ActionResult GetData()
+        {
             return View(w);
         }
     }
