@@ -1,0 +1,40 @@
+﻿@model WarLib.WarSetup
+
+@{
+    ViewBag.Title = "War";
+    Layout = "~/Views/Layouts/_MainLayoutPage.cshtml";
+}
+
+<h2>War</h2>
+
+<div id="play-area">
+    filler coq
+</div>
+<div id="lower-info-area">
+    aaaaaaaaaaaaaa
+</div>
+<div class="button" id="draw-button">draw cards</div>
+<div class="button" id="reset-button">reset cards</div>
+<script>
+    $("#draw-button").click(function () {
+        $.ajax({
+            url: "/Home/WarGetRound",
+            type: "get",
+            data: $("form").serialize(),
+            success: function (result) {
+                $("#play-area").html(result);
+            }
+        });
+    });
+
+    $("#reset-button").click(function () {
+        $.ajax({
+            url: "/Home/WarReset",
+            type: "get",
+            data: $("form").serialize(),
+            success: function (result) {
+                
+            }
+        });
+    });
+</script>

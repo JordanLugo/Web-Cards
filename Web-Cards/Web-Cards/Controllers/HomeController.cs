@@ -10,12 +10,10 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
-        WarSetup test = new WarSetup();
-        // GET: Home
+		WarSetup test = new WarSetup();        // GET: Home
         public ActionResult Index()
         {
-            return View(test);
-        }
+            return View(test);        }
 
         public ActionResult Contact()
         {
@@ -25,6 +23,22 @@ namespace Web_Cards.Controllers
         public ActionResult About()
         {
             return View();
+        }
+
+        public ActionResult WarGetRound()
+        {
+            return View(w);
+        }
+
+        public ActionResult War()
+        {
+            return View(w);
+        }
+
+        public string WarReset()
+        {
+            w.ResetNewGame();
+            return "War Reset ok";
         }
     }
 }
