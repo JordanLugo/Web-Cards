@@ -14,6 +14,7 @@ namespace Web_Cards.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            
             return View();
         }
 
@@ -27,13 +28,12 @@ namespace Web_Cards.Controllers
             return View();
         }
 
-        public ActionResult ExampleGame()
+        public ActionResult WarGetRound()
         {
-            
             return View(w);
         }
 
-        public ActionResult GetData()
+        public ActionResult War()
         {
             return View(w);
         }
