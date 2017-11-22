@@ -4,7 +4,8 @@ namespace CardsLib
 {
     /// <summary>
     /// Represents a standard playing card
-    /// </summary>
+    /// </summary> 
+    [Serializable]
     public class Card
     {
         public Card(string fullName, string suit, string value, int numValue)

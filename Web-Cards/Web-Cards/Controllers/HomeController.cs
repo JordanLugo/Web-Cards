@@ -10,10 +10,11 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
+        WarSetup test = new WarSetup();
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            return View(test);
         }
 
         public ActionResult Contact()
