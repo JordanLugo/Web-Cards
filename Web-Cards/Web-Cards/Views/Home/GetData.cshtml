@@ -1,0 +1,8 @@
+﻿@model WarLib.WarSetup
+
+<div style="border: 2px solid black">
+@Model.Player1Cards.First().FullName
+<img src="~/Content/Images/Cards/@(
+    Model.Player1Cards.First().ValueInt > 10 ? Model.Player1Cards.First().Value : Model.Player1Cards.First().ValueInt+""
+ )_of_@(Model.Player1Cards.First().Suit).svg" />
+</div>
