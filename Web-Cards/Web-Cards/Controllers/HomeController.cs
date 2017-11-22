@@ -37,5 +37,11 @@ namespace Web_Cards.Controllers
         {
             return View(w);
         }
+
+        public string WarReset()
+        {
+            w.ResetNewGame();
+            return "War Reset ok";
+        }
     }
 }

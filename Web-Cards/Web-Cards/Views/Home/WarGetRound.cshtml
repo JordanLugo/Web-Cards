@@ -1,6 +1,7 @@
 ﻿@model WarLib.WarSetup
 
 <div id="enemy-area">
+    Deck size: @Model.Player2Cards.Count()
     @if (Model.Player2Cards.Count() > 0)
     {
         <p>@Model.Player2Cards.First().FullName</p>
@@ -12,6 +13,7 @@
     }
 </div>
 <div id="player-area">
+    Deck size: @Model.Player1Cards.Count()
     @if (Model.Player1Cards.Count() > 0)
     {
         <p>@Model.Player1Cards.First().FullName</p>

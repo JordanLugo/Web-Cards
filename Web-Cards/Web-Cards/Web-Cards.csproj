@@ -313,8 +313,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Layouts\_MainLayoutPage.cshtml" />
-    <Content Include="Views\Home\ExampleGame.cshtml" />
-    <Content Include="Views\Shared\Parti.cshtml" />
     <Content Include="Views\Home\War.cshtml" />
     <Content Include="Views\Home\WarGetRound.cshtml" />
   </ItemGroup>
