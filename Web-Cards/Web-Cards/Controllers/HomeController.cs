@@ -35,12 +35,14 @@ namespace Web_Cards.Controllers
 
         public string WarDoBattle()
         {
-            if (test.Battle())
+            //TODO, UPDATE VIEW WITH WINNER INFO
+            int winner = test.Battle();
+            if (winner == 0)
             {
                 test.War();
                 return "War is go";
             }
-            return "Battle done";
+            return $"Player {winner} is winner";
         }
 
         public ActionResult War()
