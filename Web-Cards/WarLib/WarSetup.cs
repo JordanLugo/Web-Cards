@@ -12,14 +12,9 @@ namespace WarLib
 {
     public class WarSetup
     {
-
-        /*
-         * 
          */
-
-        private Deck player1StoredCards = new Deck();
-        private Deck player2StoredCards = new Deck();
-        private Deck player1Cards = new Deck();
+		private Deck player1StoredCards = new Deck();
+        private Deck player2StoredCards = new Deck();        private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
         private Random rand = new Random();
         /// <summary>
@@ -137,11 +132,11 @@ namespace WarLib
         {
             Dictionary<string, List<Card>> saveData = new Dictionary<string, List<Card>>();
 
+
             saveData.Add("Player1HeldCards", player1Cards.Cards.ToList());
             saveData.Add("Player2HeldCards", player2Cards.Cards.ToList());
             saveData.Add("Player1StoredCards", player1StoredCards.Cards.ToList());
             saveData.Add("Player2StoredCards", player2StoredCards.Cards.ToList());
-
             MemoryStream stream = new MemoryStream();
             BinaryFormatter bf = new BinaryFormatter();
 
