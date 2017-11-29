@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace WarLib
 {
     public class WarSetup
-    {		private Deck player1StoredCards = new Deck();
+    {
+        private Deck player1StoredCards = new Deck();
         private Deck player2StoredCards = new Deck();
         private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
@@ -89,35 +90,39 @@ namespace WarLib
         /// <summary>
         /// Compares Player 1's and Player 2's faced up cards and decides winner or loser of that turn, or whether a war state has been achieved. 
         /// </summary>
-        /// <returns>Returns true when war occurs, and false if not</returns>
-        public bool Battle()
+        /// <returns>Battle returns the player number of the winner, though it returns zero if war is triggered.</returns>
+        public int Battle()
         {
-            bool war = false;
+            int playerOne = -1;
 
             if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
             {
-                war = true;
+                playerOne = 0;
             }
             else
             {
                 if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
                     CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
+                    playerOne = 1;
                 }
                 else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
                     CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
+                    playerOne = 2;
                 }
             }
 
-            return war;
+            return playerOne;
         }
         private void CollectWinnings(Deck winner, Deck loserStored, Deck winnerStored)
         {
-			while (loserStored.Cards.Count != 0)            {
+			while (loserStored.Cards.Count != 0)
+            {
                 winner.Draw(loserStored);
             };
-			while(winnerStored.Cards.Count != 0)            {
+			while(winnerStored.Cards.Count != 0)
+            {
                 winner.Draw(winnerStored);
             };
         }
