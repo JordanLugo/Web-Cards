@@ -12,9 +12,9 @@ namespace WarLib
 {
     public class WarSetup
     {
-         */
 		private Deck player1StoredCards = new Deck();
-        private Deck player2StoredCards = new Deck();        private Deck player1Cards = new Deck();
+        private Deck player2StoredCards = new Deck();
+        private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
         private Random rand = new Random();
         /// <summary>

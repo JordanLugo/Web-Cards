@@ -1,7 +1,6 @@
 ﻿@model WarLib.WarSetup
 
 <div id="enemy-area">
-    Deck size: @Model.Player2Cards.Count()
     @foreach (CardsLib.Card card in Model.Player2StoredCards)
     {
         <p>@card.FullName</p>
@@ -11,7 +10,6 @@
     }
 </div>
 <div id="player-area">
-    Deck size: @Model.Player1Cards.Count()
     @foreach (CardsLib.Card card in Model.Player1StoredCards)
     {
         <p>@card.FullName</p>
