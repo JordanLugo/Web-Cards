@@ -13,24 +13,19 @@ namespace WarLib
 {
     public class WarSetup
     {
-
-        /*
-         * 
-         */
-
-        private Deck Player1StoredCards = new Deck();
-        private Deck Player2StoredCards = new Deck();
+        private Deck player1StoredCards = new Deck();
+        private Deck player2StoredCards = new Deck();
         private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
         private Random rand = new Random();
         /// <summary>
-        /// The cards that player 1 has.
+        /// The cards that player 1 has layed.
         /// </summary>
-        public List<Card> Player1Cards { get { return player1Cards.Cards; } }
+        public List<Card> Player1StoredCards { get { return player1StoredCards.Cards; } }
         /// <summary>
-        /// The cards that player 2 has.
+        /// The cards that player 2 has layed.
         /// </summary>
-        public List<Card> Player2Cards { get { return player2Cards.Cards; } }
+        public List<Card> Player2StoredCards { get { return player2StoredCards.Cards; } }
         /// <summary>
         /// This sets up and starts a game of War
         /// </summary>
@@ -65,64 +60,80 @@ namespace WarLib
         /// Player 1 plays one card
         /// </summary>
         /// <param name="faceUp">If true player 1 will lay a card face up. If false player 1 will lay a card face down.</param>
-        public void Player1LayCard(bool faceUp)
+        /// <returns>Returns true when player is unable to lay a card.</returns>
+        public bool Player1LayCard(bool faceUp)
         {
-            Player1StoredCards.Draw(player1Cards);
-            Player1StoredCards.Cards.Last().FaceUp = faceUp;
+            bool unableToLay = false;
+            unableToLay = player1Cards.Cards.Count == 0;
+            if (!unableToLay)
+            {
+                player1StoredCards.Draw(player1Cards);
+                player1StoredCards.Cards.Last().FaceUp = faceUp;
+            }
+            return unableToLay;
         }
         /// <summary>
         /// Player 2 plays one card
         /// </summary>
         /// <param name="faceUp">If true player 2 will lay a card face up. If false player 2 will lay a card face down.</param>
-        public void Player2LayCard(bool faceUp)
+        /// <returns>Returns true when player is unable to lay a card.</returns>
+        public bool Player2LayCard(bool faceUp)
         {
-            Player2StoredCards.Draw(player2Cards);
-            Player2StoredCards.Cards.Last().FaceUp = faceUp;
+            bool unableToLay = false;
+            unableToLay = player1Cards.Cards.Count == 0;
+            if (!unableToLay)
+            {
+                player2StoredCards.Draw(player2Cards);
+                player2StoredCards.Cards.Last().FaceUp = faceUp;
+            }
+            return unableToLay;
         }
         /// <summary>
         /// Compares Player 1's and Player 2's faced up cards and decides winner or loser of that turn, or whether a war state has been achieved. 
         /// </summary>
-        /// <returns>Returns true when war occurs, and false if not</returns>
-        public bool Battle()
+        /// <returns>Battle returns the player number of the winner, though it returns zero if war is triggered.</returns>
+        public int Battle()
         {
-            bool war = false;
+            int playerOne = -1;
 
-            if (Player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == Player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+            if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
             {
-                war = true;
+                playerOne = 0;
             }
-            if (!war)
+            else
             {
-                if (Player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > Player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
-                    CollectWinnings(player1Cards, Player2StoredCards, Player1StoredCards);
+                    CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
+                    playerOne = 1;
                 }
-                if (Player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < Player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
-                    CollectWinnings(player2Cards, Player1StoredCards, Player2StoredCards);
+                    CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
+                    playerOne = 2;
                 }
             }
 
-            return war;
+            return playerOne;
         }
         private void CollectWinnings(Deck winner, Deck loserStored, Deck winnerStored)
         {
-            for (; loserStored.Cards.Count != 0;)
+			while (loserStored.Cards.Count != 0)
             {
-                winner.Draw(Player2StoredCards);
-            }
-            for (; winnerStored.Cards.Count != 0;)
+                winner.Draw(loserStored);
+            };
+			while(winnerStored.Cards.Count != 0)
             {
-                winner.Draw(Player1StoredCards);
-            }
+                winner.Draw(winnerStored);
+            };
         }
         /// <summary>
         /// Sets up the field for war
         /// </summary>
         public void War()
         {
-            Player1StoredCards.Cards.Where(x => x.FaceUp).Select(x => x).ToList().ForEach(x => x.FaceUp = false);
-            Player2StoredCards.Cards.Where(x => x.FaceUp).Select(x => x).ToList().ForEach(x => x.FaceUp = false);
+            player1StoredCards.Cards.Where(x => x.FaceUp).Select(x => x).ToList().ForEach(x => x.FaceUp = false);
+            player2StoredCards.Cards.Where(x => x.FaceUp).Select(x => x).ToList().ForEach(x => x.FaceUp = false);
 
             Player1LayCard(false);
             Player1LayCard(true);
@@ -138,17 +149,20 @@ namespace WarLib
         {
             Dictionary<string, List<Card>> saveData = new Dictionary<string, List<Card>>();
 
-            saveData.Add("Player1HeldCards", Player1Cards.ToList());
-            saveData.Add("Player2HeldCards", Player2Cards.ToList());
-            saveData.Add("Player1StoredCards", Player1StoredCards.Cards.ToList());
-            saveData.Add("Player2StoredCards", Player2StoredCards.Cards.ToList());
 
+            saveData.Add("Player1HeldCards", player1Cards.Cards.ToList());
+            saveData.Add("Player2HeldCards", player2Cards.Cards.ToList());
+            saveData.Add("Player1StoredCards", player1StoredCards.Cards.ToList());
+            saveData.Add("Player2StoredCards", player2StoredCards.Cards.ToList());
             MemoryStream stream = new MemoryStream();
             BinaryFormatter bf = new BinaryFormatter();
 
             bf.Serialize(stream, saveData);
-            
-            return stream.ToArray();
+
+            byte[] serializedData = stream.ToArray();
+            stream.Close();
+
+            return serializedData;
         }
 
         public bool LoadState(byte[] data)
@@ -159,23 +173,24 @@ namespace WarLib
             BinaryFormatter bf = new BinaryFormatter();
 
             stream.Write(data, 0, data.Length);
+            stream.Position = 0;
             Dictionary<string, List<Card>> test = (Dictionary<string, List<Card>>)bf.Deserialize(stream);
 
             if (test.Keys.Contains("Player1HeldCards") && test.Keys.Contains("Player2HeldCards") && test.Keys.Contains("Player1StoredCards") && test.Keys.Contains("Player2StoredCards"))
             {
                 player1Cards.ClearDeck();
                 player2Cards.ClearDeck();
-                Player1StoredCards.ClearDeck();
-                Player2StoredCards.ClearDeck();
+                player1StoredCards.ClearDeck();
+                player2StoredCards.ClearDeck();
 
                 player1Cards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1HeldCards")));
                 player2Cards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2HeldCards")));
-                Player1StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1StoredCards")));
-                Player2StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2StoredCards")));
+                player1StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1StoredCards")));
+                player2StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2StoredCards")));
 
                 validInput = true;
             }
-
+            stream.Close();
             return validInput;
         }
 

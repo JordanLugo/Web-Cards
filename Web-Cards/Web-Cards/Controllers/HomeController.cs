@@ -10,11 +10,11 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
-		WarSetup test = new WarSetup();        // GET: Home
+
+		static WarSetup test = new WarSetup();
         public ActionResult Index()
         {
-            return View(test);
-        }
+            return View(test);        }
 
         public ActionResult Contact()
         {
@@ -28,7 +28,21 @@ namespace Web_Cards.Controllers
 
         public ActionResult WarGetRound()
         {
+            test.Player1LayCard(true);
+            test.Player2LayCard(true);
             return View(test);
+        }
+
+        public string WarDoBattle()
+        {
+            //TODO, UPDATE VIEW WITH WINNER INFO
+            int winner = test.Battle();
+            if (winner == 0)
+            {
+                test.War();
+                return "War is go";
+            }
+            return $"Player {winner} is winner";
         }
 
         public ActionResult War()

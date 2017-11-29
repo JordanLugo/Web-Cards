@@ -1,26 +1,22 @@
 ﻿@model WarLib.WarSetup
 
 <div id="enemy-area">
-    Deck size: @Model.Player2Cards.Count()
-    @if (Model.Player2Cards.Count() > 0)
+    @foreach (CardsLib.Card card in Model.Player2StoredCards)
     {
-        <p>@Model.Player2Cards.First().FullName</p>
+        <p>@card.FullName</p>
         <img src="~/Content/Images/Cards/@(
-            Model.Player2Cards.First().ValueInt > 10 ? Model.Player2Cards.First().Value : Model.Player2Cards.First().ValueInt + ""
-            )_of_@(Model.Player2Cards.First().Suit).svg" 
-         />
-        Model.Player2LayCard(true);
+            card.FaceUp == true 
+            ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg") 
+            : "card_back.png")" />
     }
 </div>
 <div id="player-area">
-    Deck size: @Model.Player1Cards.Count()
-    @if (Model.Player1Cards.Count() > 0)
+    @foreach (CardsLib.Card card in Model.Player1StoredCards)
     {
-        <p>@Model.Player1Cards.First().FullName</p>
+        <p>@card.FullName</p>
         <img src="~/Content/Images/Cards/@(
-            Model.Player1Cards.First().ValueInt > 10 ? Model.Player1Cards.First().Value : Model.Player1Cards.First().ValueInt+""
-            )_of_@(Model.Player1Cards.First().Suit).svg"
-        />
-        Model.Player1LayCard(true);
+            card.FaceUp == true
+            ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg")
+            : "card_back.png")" />
     }
 </div>
