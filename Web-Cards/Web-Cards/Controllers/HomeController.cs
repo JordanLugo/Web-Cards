@@ -10,7 +10,7 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
-		WarSetup test = new WarSetup();        // GET: Home
+		static WarSetup test = new WarSetup();
         public ActionResult Index()
         {
             return View(test);        }
@@ -27,17 +27,20 @@ namespace Web_Cards.Controllers
 
         public ActionResult WarGetRound()
         {
-            return View(w);
+            test.Player1LayCard(true);
+            test.Player2LayCard(true);
+            test.Battle();
+            return View(test);
         }
 
         public ActionResult War()
         {
-            return View(w);
+            return View(test);
         }
 
         public string WarReset()
         {
-            w.ResetNewGame();
+            test.ResetNewGame();
             return "War Reset ok";
         }
     }

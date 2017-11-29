@@ -99,7 +99,7 @@ namespace WarLib
                 {
                     CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
                 }
-                if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
                     CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
                 }
@@ -109,11 +109,11 @@ namespace WarLib
         }
         private void CollectWinnings(Deck winner, Deck loserStored, Deck winnerStored)
         {
-            for (; loserStored.Cards.Count != 0;)
+            for (; loserStored.Cards.Count > 0;)
             {
                 winner.Draw(player2StoredCards);
             }
-            for (; winnerStored.Cards.Count != 0;)
+            for (; winnerStored.Cards.Count > 0;)
             {
                 winner.Draw(player1StoredCards);
             }
