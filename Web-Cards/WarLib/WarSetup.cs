@@ -12,9 +12,12 @@ namespace WarLib
 {
     public class WarSetup
     {
+        /*
+         * 
          */
 		private Deck player1StoredCards = new Deck();
-        private Deck player2StoredCards = new Deck();        private Deck player1Cards = new Deck();
+        private Deck player2StoredCards = new Deck();
+        private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
         private Random rand = new Random();
         /// <summary>
@@ -59,19 +62,33 @@ namespace WarLib
         /// Player 1 plays one card
         /// </summary>
         /// <param name="faceUp">If true player 1 will lay a card face up. If false player 1 will lay a card face down.</param>
-        public void Player1LayCard(bool faceUp)
+        /// <returns>Returns true when player is unable to lay a card.</returns>
+        public bool Player1LayCard(bool faceUp)
         {
-            player1StoredCards.Draw(player1Cards);
-            player1StoredCards.Cards.Last().FaceUp = faceUp;
+            bool unableToLay = false;
+            unableToLay = player1Cards.Cards.Count == 0;
+            if (!unableToLay)
+            {
+                player1StoredCards.Draw(player1Cards);
+                player1StoredCards.Cards.Last().FaceUp = faceUp;
+            }
+            return unableToLay;
         }
         /// <summary>
         /// Player 2 plays one card
         /// </summary>
         /// <param name="faceUp">If true player 2 will lay a card face up. If false player 2 will lay a card face down.</param>
-        public void Player2LayCard(bool faceUp)
+        /// <returns>Returns true when player is unable to lay a card.</returns>
+        public bool Player2LayCard(bool faceUp)
         {
-            player2StoredCards.Draw(player2Cards);
-            player2StoredCards.Cards.Last().FaceUp = faceUp;
+            bool unableToLay = false;
+            unableToLay = player1Cards.Cards.Count == 0;
+            if (!unableToLay)
+            {
+                player2StoredCards.Draw(player2Cards);
+                player2StoredCards.Cards.Last().FaceUp = faceUp;
+            }
+            return unableToLay;
         }
         /// <summary>
         /// Compares Player 1's and Player 2's faced up cards and decides winner or loser of that turn, or whether a war state has been achieved. 
@@ -85,7 +102,7 @@ namespace WarLib
             {
                 war = true;
             }
-            if (!war)
+            else
             {
                 if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
@@ -101,14 +118,14 @@ namespace WarLib
         }
         private void CollectWinnings(Deck winner, Deck loserStored, Deck winnerStored)
         {
-            for (; loserStored.Cards.Count != 0;)
+            while (loserStored.Cards.Count != 0)
             {
-                winner.Draw(player2StoredCards);
-            }
-            for (; winnerStored.Cards.Count != 0;)
+                winner.Draw(loserStored);
+            };
+            while(winnerStored.Cards.Count != 0)
             {
-                winner.Draw(player1StoredCards);
-            }
+                winner.Draw(winnerStored);
+            };
         }
         /// <summary>
         /// Sets up the field for war
