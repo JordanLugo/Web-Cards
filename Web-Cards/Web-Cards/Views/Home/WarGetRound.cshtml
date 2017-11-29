@@ -5,8 +5,9 @@
     {
         <p>@card.FullName</p>
         <img src="~/Content/Images/Cards/@(
-            card.ValueInt > 10 ? card.Value : card.ValueInt + ""
-            )_of_@(card.Suit).svg" />
+            card.FaceUp == true 
+            ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}") 
+            : "card_back.png")" />
     }
 </div>
 <div id="player-area">
@@ -14,7 +15,8 @@
     {
         <p>@card.FullName</p>
         <img src="~/Content/Images/Cards/@(
-            card.ValueInt > 10 ? card.Value : card.ValueInt + ""
-            )_of_@(card.Suit).svg" />
+            card.FaceUp == true
+            ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}")
+            : "card_back.png")" />
     }
 </div>

@@ -30,8 +30,17 @@ namespace Web_Cards.Controllers
         {
             test.Player1LayCard(true);
             test.Player2LayCard(true);
-            test.Battle();
             return View(test);
+        }
+
+        public string WarDoBattle()
+        {
+            if (test.Battle())
+            {
+                test.War();
+                return "War is go";
+            }
+            return "Battle done";
         }
 
         public ActionResult War()
