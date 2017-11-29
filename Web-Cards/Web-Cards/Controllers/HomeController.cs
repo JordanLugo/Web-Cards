@@ -27,17 +27,17 @@ namespace Web_Cards.Controllers
 
         public ActionResult WarGetRound()
         {
-            return View(w);
+            return View(test);
         }
 
         public ActionResult War()
         {
-            return View(w);
+            return View(test);
         }
 
         public string WarReset()
         {
-            w.ResetNewGame();
+            test.ResetNewGame();
             return "War Reset ok";
         }
     }
