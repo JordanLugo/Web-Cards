@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CardsLib\CardsLib.csproj">
-      <Project>{742747B7-401B-4246-912D-0D4576418D08}</Project>
-      <Name>CardsLib</Name>
+    <ProjectReference Include="..\CardLib\CardLib.csproj">
+      <Project>{7c48c0a9-3aac-4f49-baeb-b4bcf0589ea0}</Project>
+      <Name>CardLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

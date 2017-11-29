@@ -1,7 +1,10 @@
 ﻿using CardsLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +12,11 @@ namespace WarLib
 {
     public class WarSetup
     {
+
+        /*
+         * 
+         */
+
         private Deck Player1StoredCards = new Deck();
         private Deck Player2StoredCards = new Deck();
         private Deck player1Cards = new Deck();
@@ -71,9 +79,9 @@ namespace WarLib
             Player2StoredCards.Cards.Last().FaceUp = faceUp;
         }
         /// <summary>
-        /// Compares Player 1's and Player 2's faced up cards and decides winner, loser, or war. 
+        /// Compares Player 1's and Player 2's faced up cards and decides winner or loser of that turn, or whether a war state has been achieved. 
         /// </summary>
-        /// <returns>Returns true when a war occurs, false if not</returns>
+        /// <returns>Returns true when war occurs, and false if not</returns>
         public bool Battle()
         {
             bool war = false;
@@ -119,13 +127,13 @@ namespace WarLib
             Player1LayCard(true);
 
             Player2LayCard(false);
-            Player2LayCard(true);            
+            Player2LayCard(true);
         }
         /// <summary>
         /// This Method returns a formated dictionary to be used in a save state of a game
         /// </summary>
         /// <returns>A Dictionary(string List<Card>) that can easily saved and loaded back in.></returns>
-        public Dictionary<string, List<Card>> SaveState()
+        public byte[] SaveState()
         {
             Dictionary<string, List<Card>> saveData = new Dictionary<string, List<Card>>();
 
@@ -134,24 +142,35 @@ namespace WarLib
             saveData.Add("Player1StoredCards", Player1StoredCards.Cards.ToList());
             saveData.Add("Player2StoredCards", Player2StoredCards.Cards.ToList());
 
-            return saveData;
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(stream, saveData);
+            
+            return stream.ToArray();
         }
 
-        public bool LoadState(Dictionary<string, List<Card>> data)
+        public bool LoadState(byte[] data)
         {
             bool validInput = false;
 
-            if (data.Keys.Contains("Player1HeldCards") && data.Keys.Contains("Player2HeldCards") && data.Keys.Contains("Player1StoredCards") && data.Keys.Contains("Player2StoredCards"))
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+
+            stream.Write(data, 0, data.Length);
+            Dictionary<string, List<Card>> test = (Dictionary<string, List<Card>>)bf.Deserialize(stream);
+
+            if (test.Keys.Contains("Player1HeldCards") && test.Keys.Contains("Player2HeldCards") && test.Keys.Contains("Player1StoredCards") && test.Keys.Contains("Player2StoredCards"))
             {
                 player1Cards.ClearDeck();
                 player2Cards.ClearDeck();
                 Player1StoredCards.ClearDeck();
                 Player2StoredCards.ClearDeck();
 
-                player1Cards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player1HeldCards")));
-                player2Cards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player2HeldCards")));
-                Player1StoredCards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player1StoredCards")));
-                Player2StoredCards.Cards.AddRange(data.Values.ElementAt(data.Keys.ToList().IndexOf("Player2StoredCards")));
+                player1Cards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1HeldCards")));
+                player2Cards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2HeldCards")));
+                Player1StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1StoredCards")));
+                Player2StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2StoredCards")));
 
                 validInput = true;
             }

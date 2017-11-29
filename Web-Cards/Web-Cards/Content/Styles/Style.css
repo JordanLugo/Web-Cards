@@ -60,3 +60,24 @@ header {
     display: block;
     overflow: hidden;
 }
+
+#player-area {
+    display: inline-block;
+}
+
+#enemy-area {
+    display: inline-block;
+}
+
+.button {
+    background-color: aliceblue;
+    border: 1px solid skyblue;
+    border-radius: 4px;
+    height: 50px;
+    width: 100px;
+}
+
+.small-card {
+    max-height: 200px;
+    width: auto;
+}

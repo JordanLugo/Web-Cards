@@ -313,9 +313,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Layouts\_MainLayoutPage.cshtml" />
-    <Content Include="Views\Home\ExampleGame.cshtml" />
-    <Content Include="Views\Shared\Parti.cshtml" />
-    <Content Include="Views\Home\GetData.cshtml" />
+    <Content Include="Views\Home\War.cshtml" />
+    <Content Include="Views\Home\WarGetRound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,9 +333,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CardsLib\CardsLib.csproj">
-      <Project>{1713d5d4-a989-4b2a-a480-434a5690c6c0}</Project>
-      <Name>CardsLib</Name>
+    <ProjectReference Include="..\CardLib\CardLib.csproj">
+      <Project>{7c48c0a9-3aac-4f49-baeb-b4bcf0589ea0}</Project>
+      <Name>CardLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\SolitaireLib\SolitaireLib.csproj">
       <Project>{e9bee378-a132-41dd-b1f5-36824387964e}</Project>
