@@ -10,6 +10,7 @@ namespace Web_Cards.Controllers
 {
     public class HomeController : Controller
     {
+
 		static WarSetup test = new WarSetup();
         public ActionResult Index()
         {

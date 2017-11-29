@@ -12,25 +12,17 @@ namespace WarLib
 {
     public class WarSetup
     {
-        private Deck player1StoredCards = new Deck();
-        private Deck player2StoredCards = new Deck();
-        private Deck player1Cards = new Deck();
+         */
+		private Deck player1StoredCards = new Deck();
+        private Deck player2StoredCards = new Deck();        private Deck player1Cards = new Deck();
         private Deck player2Cards = new Deck();
         private Random rand = new Random();
         /// <summary>
-        /// The cards that player 1 has.
-        /// </summary>
-        public List<Card> Player1Cards { get { return player1Cards.Cards; } }
-        /// <summary>
-        /// The cards that player 2 has.
-        /// </summary>
-        public List<Card> Player2Cards { get { return player2Cards.Cards; } }
-        /// <summary>
-        /// The cards player 1 has active.
+        /// The cards that player 1 has layed.
         /// </summary>
         public List<Card> Player1StoredCards { get { return player1StoredCards.Cards; } }
         /// <summary>
-        /// The cards player 2 has active
+        /// The cards that player 2 has layed.
         /// </summary>
         public List<Card> Player2StoredCards { get { return player2StoredCards.Cards; } }
         /// <summary>
@@ -140,17 +132,20 @@ namespace WarLib
         {
             Dictionary<string, List<Card>> saveData = new Dictionary<string, List<Card>>();
 
-            saveData.Add("Player1HeldCards", Player1Cards.ToList());
-            saveData.Add("Player2HeldCards", Player2Cards.ToList());
+
+            saveData.Add("Player1HeldCards", player1Cards.Cards.ToList());
+            saveData.Add("Player2HeldCards", player2Cards.Cards.ToList());
             saveData.Add("Player1StoredCards", player1StoredCards.Cards.ToList());
             saveData.Add("Player2StoredCards", player2StoredCards.Cards.ToList());
-
             MemoryStream stream = new MemoryStream();
             BinaryFormatter bf = new BinaryFormatter();
 
             bf.Serialize(stream, saveData);
-            
-            return stream.ToArray();
+
+            byte[] serializedData = stream.ToArray();
+            stream.Close();
+
+            return serializedData;
         }
 
         public bool LoadState(byte[] data)
@@ -161,6 +156,7 @@ namespace WarLib
             BinaryFormatter bf = new BinaryFormatter();
 
             stream.Write(data, 0, data.Length);
+            stream.Position = 0;
             Dictionary<string, List<Card>> test = (Dictionary<string, List<Card>>)bf.Deserialize(stream);
 
             if (test.Keys.Contains("Player1HeldCards") && test.Keys.Contains("Player2HeldCards") && test.Keys.Contains("Player1StoredCards") && test.Keys.Contains("Player2StoredCards"))
@@ -177,7 +173,7 @@ namespace WarLib
 
                 validInput = true;
             }
-
+            stream.Close();
             return validInput;
         }
     }
