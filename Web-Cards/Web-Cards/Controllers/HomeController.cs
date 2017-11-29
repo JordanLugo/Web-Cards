@@ -13,7 +13,8 @@ namespace Web_Cards.Controllers
 		WarSetup test = new WarSetup();        // GET: Home
         public ActionResult Index()
         {
-            return View(test);        }
+            return View(test);
+        }
 
         public ActionResult Contact()
         {
@@ -27,17 +28,17 @@ namespace Web_Cards.Controllers
 
         public ActionResult WarGetRound()
         {
-            return View(w);
+            return View(test);
         }
 
         public ActionResult War()
         {
-            return View(w);
+            return View(test);
         }
 
         public string WarReset()
         {
-            w.ResetNewGame();
+            test.ResetNewGame();
             return "War Reset ok";
         }
     }
