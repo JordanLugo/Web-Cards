@@ -30,8 +30,19 @@ namespace Web_Cards.Controllers
         {
             test.Player1LayCard(true);
             test.Player2LayCard(true);
-            test.Battle();
             return View(test);
+        }
+
+        public string WarDoBattle()
+        {
+            //TODO, UPDATE VIEW WITH WINNER INFO
+            int winner = test.Battle();
+            if (winner == 0)
+            {
+                test.War();
+                return "War is go";
+            }
+            return $"Player {winner} is winner";
         }
 
         public ActionResult War()
