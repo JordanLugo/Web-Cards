@@ -1,22 +1,27 @@
 ﻿@model WarLib.WarSetup
-
+<div>
 <div id="enemy-area">
-    @foreach (CardsLib.Card card in Model.Player2StoredCards)
+    <p>@Model.Player2CardsCount</p>
+    @for (int i = 0; i < Model.Player2StoredCards.Count; i++)
     {
-        <p>@card.FullName</p>
-        <img src="~/Content/Images/Cards/@(
-            card.FaceUp == true 
-            ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg") 
-            : "card_back.png")" />
-    }
-</div>
-<div id="player-area">
-    @foreach (CardsLib.Card card in Model.Player1StoredCards)
-    {
-        <p>@card.FullName</p>
-        <img src="~/Content/Images/Cards/@(
+        CardsLib.Card card = Model.Player2StoredCards[i];
+        <!--<p>@card.FullName</p>-->
+        <img class="small-card" style="z-index:@(i+3); margin-top: @(i == 0 ? i : (-200+(i*20)))px" src="~/Content/Images/Cards/@(
             card.FaceUp == true
             ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg")
             : "card_back.png")" />
     }
+</div>
+<div id="player-area">
+    <p>@Model.Player1CardsCount</p>
+    @for (int i = 0; i < Model.Player1StoredCards.Count; i++)
+    {
+        CardsLib.Card card = Model.Player1StoredCards[i];
+        <!--<p>@card.FullName</p>-->
+        <img class="small-card" style="z-index:@(i+3); margin-top: @(i == 0 ? i : (-200+(i*20)))px" src="~/Content/Images/Cards/@(
+            card.FaceUp == true
+            ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg")
+            : "card_back.png")" />
+    }
+</div>
 </div>
