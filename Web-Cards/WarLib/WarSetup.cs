@@ -88,7 +88,7 @@ namespace WarLib
         public bool Player2LayCard(bool faceUp)
         {
             bool unableToLay = false;
-            unableToLay = player1Cards.Cards.Count == 0;
+            unableToLay = player2Cards.Cards.Count == 0;
             if (!unableToLay)
             {
                 player2StoredCards.Draw(player2Cards);
