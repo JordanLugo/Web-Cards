@@ -245,6 +245,8 @@
     <Content Include="Content\Images\Cards\ace_of_diamonds.svg" />
     <Content Include="Content\Images\Cards\ace_of_hearts.svg" />
     <Content Include="Content\Images\Cards\ace_of_spades.svg" />
+    <Content Include="Content\Images\Cards\card_back.PNG" />
+    <Content Include="Content\Images\Cards\card_back_burned.PNG" />
     <Content Include="Content\Images\Cards\jack_of_clubs.svg" />
     <Content Include="Content\Images\Cards\jack_of_diamonds.svg" />
     <Content Include="Content\Images\Cards\jack_of_hearts.svg" />
@@ -257,6 +259,8 @@
     <Content Include="Content\Images\Cards\queen_of_diamonds.svg" />
     <Content Include="Content\Images\Cards\queen_of_hearts.svg" />
     <Content Include="Content\Images\Cards\queen_of_spades.svg" />
+    <Content Include="Content\Images\explosion.gif" />
+    <Content Include="Content\Images\winner.gif" />
     <Content Include="Content\Scripts\Script.js" />
     <Content Include="Content\Styles\Style.css" />
     <Content Include="favicon.ico" />
