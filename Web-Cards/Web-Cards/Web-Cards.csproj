@@ -317,6 +317,7 @@
     <Content Include="Views\Layouts\_MainLayoutPage.cshtml" />
     <Content Include="Views\Home\War.cshtml" />
     <Content Include="Views\Home\WarGetRound.cshtml" />
+    <Content Include="Views\Home\WarEnd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

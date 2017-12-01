@@ -80,6 +80,7 @@ header {
 .small-card {
     max-height: 200px;
     width: auto;
+    display: block;
 }
 
 #lower-info-area {

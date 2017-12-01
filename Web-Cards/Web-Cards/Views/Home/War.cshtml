@@ -30,9 +30,11 @@
                     type: "get",
                     data: $("form").serialize(),
                     success: function (result) {
-                        $("#lower-info-area").html("<p>" + result + "</p>");
-                        if (result.indexOf("War") === -1) { 
-                            //maybe do something
+                        if (result.indexOf("winner") === -1) { 
+                            $("#lower-info-area").html("<p>" + result + "</p>");
+                        }
+                        else {
+                            $("#lower-info-area").html(result + " press reset to play again");
                         }
                     }
                 });
