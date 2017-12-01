@@ -40,9 +40,9 @@ namespace Web_Cards.Controllers
             if (winner == 0)
             {
                 test.War();
-                return "War is go";
+                return "War is now initiated";
             }
-            return $"Player {winner} is winner";
+            return $"Player {winner} won this round";
         }
 
         public ActionResult War()
