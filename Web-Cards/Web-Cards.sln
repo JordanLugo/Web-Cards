@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-Cards", "Web-Cards\Web-Cards.csproj", "{77ED44E0-6254-4980-BF94-41D2E3E16D78}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_CardsDAL", "Web_CardsDAL\Web_CardsDAL.csproj", "{E2D1F286-CDDD-42AB-AD6A-4C5A2E6E7BBF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManager", "DatabaseManager\DatabaseManager.csproj", "{960609C4-7B93-4942-B6A6-462AD41DFBF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blackjack", "Blackjack\Blackjack.csproj", "{7356E461-F441-4683-980F-D5AE87EB7A7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{960609C4-7B93-4942-B6A6-462AD41DFBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960609C4-7B93-4942-B6A6-462AD41DFBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{960609C4-7B93-4942-B6A6-462AD41DFBF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7356E461-F441-4683-980F-D5AE87EB7A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7356E461-F441-4683-980F-D5AE87EB7A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7356E461-F441-4683-980F-D5AE87EB7A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7356E461-F441-4683-980F-D5AE87EB7A7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

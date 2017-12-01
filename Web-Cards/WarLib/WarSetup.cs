@@ -99,26 +99,29 @@ namespace WarLib
         /// <summary>
         /// Compares Player 1's and Player 2's faced up cards and decides winner or loser of that turn, or whether a war state has been achieved. 
         /// </summary>
-        /// <returns>Battle returns the player number of the winner, though it returns zero if war is triggered.</returns>
+        /// <returns>Battle returns the player number of the winner, though it returns zero if war is triggered. If their is an error it passed a -1 back.</returns>
         public int Battle()
         {
             int playerWhoWon = -1;
 
-            if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
-            {
-                playerWhoWon = 0;
-            }
-            else
-            {
-                if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+            if (player1StoredCards.Cards.Count != 0 && player2StoredCards.Cards.Count != 0)
+            { 
+                if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
-                    CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
-                    playerWhoWon = 1;
+                    playerWhoWon = 0;
                 }
-                else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                else
                 {
-                    CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
-                    playerWhoWon = 2;
+                    if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                    {
+                        CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
+                        playerWhoWon = 1;
+                    }
+                    else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                    {
+                        CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
+                        playerWhoWon = 2;
+                    }
                 }
             }
 
