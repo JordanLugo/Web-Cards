@@ -11,10 +11,11 @@ namespace Web_Cards.Controllers
     public class HomeController : Controller
     {
 
-		static WarSetup test = new WarSetup();
+		static WarSetup WarGame = new WarSetup();
         public ActionResult Index()
         {
-            return View(test);        }
+            return View(WarGame);
+        }
 
         public ActionResult Contact()
         {
@@ -28,43 +29,42 @@ namespace Web_Cards.Controllers
 
         public ActionResult WarGetRound()
         {
-            bool resP1 = test.Player1LayCard(true);
-            bool resP2 = test.Player2LayCard(true);
+            bool resP1 = WarGame.Player1LayCard(true);
+            bool resP2 = WarGame.Player2LayCard(true);
             if (resP1 || resP2)
             {
                 ViewBag.GameEnd = true;
-                ViewBag.Winner = resP1 ? "Player 1" : "Player 2";
+                ViewBag.Winner = resP1 ? "Player 2" : "Player 1";
                 return View("WarEnd");
             }
             else {
-                return View(test);
+                return View(WarGame);
             }
         }
 
         public string WarDoBattle()
         {
-            //TODO, UPDATE VIEW WITH WINNER INFO
-            int winner = test.Battle();
+            int winner = WarGame.Battle();
             if (winner == 0)
             {
-                test.War();
+                WarGame.War();
                 return "War is now initiated";
             }
             else if (winner == -1)
             {
                 return "Game over. Press Reset to play again";
             }
-            return $"Player {winner} won this round";
+            return $"{(winner == 1 ? "You" : "The Computer")} won this round";
         }
 
         public ActionResult War()
         {
-            return View(test);
+            return View(WarGame);
         }
 
         public string WarReset()
         {
-            test.ResetNewGame();
+            WarGame.ResetNewGame();
             return "War Reset ok";
         }
     }

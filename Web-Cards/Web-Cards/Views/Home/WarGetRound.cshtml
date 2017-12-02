@@ -1,24 +1,52 @@
 ﻿@model WarLib.WarSetup
 <div>
 <div id="enemy-area">
-    <p>@Model.Player2CardsCount</p>
+    <p class="left-align-text">
+        @if(Model.Player2CardsCount >= 40)
+        {
+            <span class="win-warning">@Model.Player2CardsCount</span>
+        }
+        else if (Model.Player2CardsCount <= 10)
+        {
+            <span class="lose-warning">@Model.Player2CardsCount</span>
+        }
+        else
+        {
+            <span>@Model.Player2CardsCount</span>
+        }
+    </p>
+    <p class="left-align-text">The computer played: </p>
     @for (int i = 0; i < Model.Player2StoredCards.Count; i++)
     {
         CardsLib.Card card = Model.Player2StoredCards[i];
         <!--<p>@card.FullName</p>-->
-        <img class="small-card" style="z-index:@(i+3); margin-top: @(i == 0 ? i : (-200+(i*20)))px" src="~/Content/Images/Cards/@(
+        <img class="small-card" style="z-index:@(i+3); margin-top: @(i == 0 ? i : (-200+(i+20)))px" src="~/Content/Images/Cards/@(
             card.FaceUp == true
             ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg")
             : "card_back.png")" />
     }
 </div>
 <div id="player-area">
-    <p>@Model.Player1CardsCount</p>
+    <p class="right-align-text">
+        @if (Model.Player1CardsCount >= 40)
+        {
+            <span class="win-warning">@Model.Player1CardsCount</span>
+        }
+        else if (Model.Player1CardsCount <= 10)
+        {
+            <span class="lose-warning">@Model.Player1CardsCount</span>
+        }
+        else
+        {
+            <span>@Model.Player1CardsCount</span>
+        }
+    </p>
+    <p class="right-align-text">You played: </p>
     @for (int i = 0; i < Model.Player1StoredCards.Count; i++)
     {
         CardsLib.Card card = Model.Player1StoredCards[i];
         <!--<p>@card.FullName</p>-->
-        <img class="small-card" style="z-index:@(i+3); margin-top: @(i == 0 ? i : (-200+(i*20)))px" src="~/Content/Images/Cards/@(
+        <img class="small-card" style="z-index:@(i+3); margin-top: @(i == 0 ? i : (-200+(i+20)))px" src="~/Content/Images/Cards/@(
             card.FaceUp == true
             ? (card.ValueInt > 10 ? $"{card.Value}_of_{card.Suit}.svg" : $"{card.ValueInt}_of_{card.Suit}.svg")
             : "card_back.png")" />
