@@ -1,0 +1,33 @@
+﻿@model WarLib.WarSetup
+
+@if (ViewBag.GameEnd == true)
+{
+    if (ViewBag.Winner == "Player 1")
+    {
+        <div>
+            <div id="enemy-area">
+                <p>Player 2 Lost!</p>
+                <img class="small-card" src="~/Content/Images/Cards/card_back_burned.PNG" />
+                <div class="loser-overlay-div"><img class="loser-overlay-img" src="~/Content/Images/explosion.gif" /></div>
+            </div>
+            <div id="player-area">
+                <p>Player 1 Wins!</p>
+                <img class="small-card" src="~/Content/Images/Cards/card_back.PNG" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            <div id="enemy-area">
+                <p>Player 2 Won!</p>
+                <img class="small-card" src="~/Content/Images/Cards/card_back.PNG" />
+            </div>
+            <div id="player-area">
+                <p>Player 1 Lost!</p>
+                <img class="small-card" src="~/Content/Images/Cards/card_back_burned.PNG" />
+                <div class="loser-overlay-div"><img class="loser-overlay-img" src="~/Content/Images/explosion.gif" /></div>
+            </div>
+        </div>
+    }
+}

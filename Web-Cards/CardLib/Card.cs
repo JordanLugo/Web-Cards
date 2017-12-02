@@ -18,7 +18,7 @@ namespace CardsLib
 
         /// <summary>
         /// Full display name
-        /// </summary>
+        /// </summary> 
         public string FullName { get; set; }
 
         /// <summary>
