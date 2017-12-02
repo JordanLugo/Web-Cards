@@ -27,7 +27,8 @@ namespace DatabaseManager
                     GameID = db.WarSetups.Last().GameID + 1,
                     UserId = 0,
                     SerializedData = currentGame
-                };
+                }
+                ;
                 db.WarSetups.Add(currentGameState);
                 db.SaveChanges();
             }
@@ -37,7 +38,7 @@ namespace DatabaseManager
         {
             using(cardsEntities db = new cardsEntities())
             {
-               WarSetup warSetupToBeDeleted = db.WarSetups.Where(w => w.GameID == gameID).First();
+                WarSetup warSetupToBeDeleted = db.WarSetups.Where(w => w.GameID == gameID).First();
 
                 db.WarSetups.Remove(warSetupToBeDeleted);
 
