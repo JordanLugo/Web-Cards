@@ -1,7 +1,9 @@
 ﻿using CardsLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,8 +31,7 @@ namespace Blackjack
         public int DrawDeckCount { get { return drawDeck.Cards.Count; } }
         public BlackjackSetup(int numberOfPlayers)
         {
-            this.numberOfPlayers = numberOfPlayers;
-            ResetNewGame();
+            ResetNewGame(numberOfPlayers);
         }
         /// <summary>
         /// This returns the cards that a player has denoted by their player number
@@ -44,10 +45,14 @@ namespace Blackjack
         /// <summary>
         /// This is a method that clears everything a rebuilds a new game from scratch.
         /// </summary>
-        public void ResetNewGame()
+        /// <param name="numberOfPlayers">This is the number of players paying the game.</param>
+        public void ResetNewGame(int numberOfPlayers)
         {
+            this.numberOfPlayers = numberOfPlayers;
             drawDeck.ResetDeck();
             discardPile.ClearDeck();
+            dealersCards.ClearDeck();
+            playersCards.ForEach(deck => deck.ClearDeck());
 
             drawDeck.Cards.Where(cards => cards.Suit.Equals("Jack", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
             drawDeck.Cards.Where(cards => cards.Suit.Equals("Queen", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
@@ -118,6 +123,10 @@ namespace Blackjack
         /// <returns>Returns whether or not inputed player exceeded 21.</returns>
         public bool CheckPlayerForBust(int playerNumber)
         {
+            return CheckValueOfHand(playerNumber) > 21;
+        }
+        private int CheckValueOfHand(int playerNumber)
+        {
             int valueOfCards = 0;
             Deck player = playerNumber != 0 ? playersCards.ElementAt(playerNumber - 1) : dealersCards;
 
@@ -143,11 +152,85 @@ namespace Blackjack
                 }
             }
 
-            return valueOfCards > 21;
+            return valueOfCards;
         }
+        /// <summary>
+        /// This is the first move that the Dealer has to make
+        /// </summary>
         public void DealerFlipsFaceDownCard()
         {
             dealersCards.Cards.Where(card => !card.FaceUp).ToList().ForEach(card => card.FaceUp = true);
+        }
+        /// <summary>
+        /// The checks if the dealer needs to make a move
+        /// </summary>
+        /// <returns>Returns true if the dealer needs to draw a card</returns>
+        public bool CheckIfDealerNeedsToHit()
+        {
+            return CheckValueOfHand(0) < 17;
+        }
+        /// <summary>
+        /// This saves the game as a byte[].
+        /// </summary>
+        /// <param name="playerNumber">This is the player number of whos turn it is non-zero based so player 1 = 1, player 2 = 2, dealer = 0.</param>
+        /// <returns>Returns a byte[] of the games state serialized</returns>
+        public byte[] SaveState(int playerNumber)
+        {
+            Dictionary<string, object> saveData = new Dictionary<string, object>();
+            
+            saveData.Add("DrawPile", drawDeck);
+            saveData.Add("DiscardPile", discardPile);
+            saveData.Add("DealersCards", dealersCards);
+            saveData.Add("PlayersCards", playersCards);
+            saveData.Add("NumberOfPlayers", numberOfPlayers);
+            saveData.Add("CurrentPlayerTurn" , playerNumber);
+
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(stream, saveData);
+
+            byte[] serializedData = stream.ToArray();
+            stream.Close();
+
+            return serializedData;
+        }
+        /// <summary>
+        /// This method will load all the data from the byte[] in to the game and return the current player's turn
+        /// </summary>
+        /// <param name="data">This is the byte[] data that was serialized to save it.</param>
+        /// <returns>Returns an int of the current players turn but will return a null if the data was not the proper data to be entered.</returns>
+        public int? LoadState(byte[] data)
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            int currentPlayerTurn;
+
+            stream.Write(data, 0, data.Length);
+            stream.Position = 0;
+            Dictionary<string, object> test = (Dictionary<string, object>)bf.Deserialize(stream);
+
+            if (test.Keys.Contains("DrawPile") && test.Keys.Contains("DiscardPile") && test.Keys.Contains("DealersCards") && test.Keys.Contains("PlayersCards") && test.Keys.Contains("NumberOfPlayers") && test.Keys.Contains("CurrentPlayerTurn"))
+            {
+                drawDeck.ClearDeck();
+                discardPile.ClearDeck();
+                dealersCards.ClearDeck();
+                playersCards.ForEach(deck => deck.ClearDeck());
+
+                drawDeck = (Deck)test.ElementAt(0).Value;
+                discardPile = (Deck)test.ElementAt(1).Value;
+                dealersCards = (Deck)test.ElementAt(2).Value;
+                playersCards = (List<Deck>)test.ElementAt(3).Value;
+                numberOfPlayers = (int)test.ElementAt(4).Value;
+                currentPlayerTurn = (int)test.ElementAt(5).Value;
+                stream.Close();
+
+                return currentPlayerTurn;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

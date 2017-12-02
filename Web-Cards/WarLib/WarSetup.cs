@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
-using Web_CardsDAL;
 
 namespace WarLib
 {
@@ -193,7 +192,11 @@ namespace WarLib
 
             return serializedData;
         }
-
+        /// <summary>
+        /// This method will load all the data from the byte[] in to the game and return the current player's turn
+        /// </summary>
+        /// <param name="data">This is the byte[] data that was serialized to save it.</param>
+        /// <returns>Returns an bool for it the save data entered was correctly deserialized.</returns>
         public bool LoadState(byte[] data)
         {
             bool validInput = false;
