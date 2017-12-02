@@ -9,6 +9,10 @@ namespace DatabaseManager
 {
     public class Manager
     {
+        /// <summary>
+        /// Adds a War Game to the Database
+        /// </summary>
+        /// <param name="currentGame">The serialized form of War that is to be saved</param>
         public void AddWarGameToDataBase(byte[] currentGame)
         {
             using (cardsEntities db = new cardsEntities())
@@ -33,7 +37,22 @@ namespace DatabaseManager
                 db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// Looks through the Database for a specific game then takes the serialized Data from that Database and passes that data along
+        /// </summary>
+        /// <param name="ID">The ID for the Game that you want</param>
+        /// <returns>The Serialized Data for the specified instance of War</returns>
+        public byte[] GetGameDataByID(int ID)
+        {
+            using(cardsEntities db = new cardsEntities())
+            {
+                return db.WarSetups.Where(x => x.GameID == ID).First().SerializedData;
+            }
+        }
+        /// <summary>
+        /// Removes a game of War from the Database
+        /// </summary>
+        /// <param name="gameID">The ID of the game that is to be Deleted</param>
         public void DeleteWarGameByID(int gameID)
         {
             using(cardsEntities db = new cardsEntities())
