@@ -19,6 +19,14 @@ namespace WarLib
         private Deck player2Cards = new Deck();
         private Random rand = new Random();
         /// <summary>
+        /// The number of cards that player 1 has left in their possession.
+        /// </summary>
+        public int Player1CardsCount { get { return player1Cards.Cards.Count; } }
+        /// <summary>
+        /// The number of cards that player 2 has left in their possession.
+        /// </summary>
+        public int Player2CardsCount { get { return player2Cards.Cards.Count; } }
+        /// <summary>
         /// The cards that player 1 has layed.
         /// </summary>
         public List<Card> Player1StoredCards { get { return player1StoredCards.Cards; } }
@@ -80,7 +88,7 @@ namespace WarLib
         public bool Player2LayCard(bool faceUp)
         {
             bool unableToLay = false;
-            unableToLay = player1Cards.Cards.Count == 0;
+            unableToLay = player2Cards.Cards.Count == 0;
             if (!unableToLay)
             {
                 player2StoredCards.Draw(player2Cards);
@@ -91,30 +99,33 @@ namespace WarLib
         /// <summary>
         /// Compares Player 1's and Player 2's faced up cards and decides winner or loser of that turn, or whether a war state has been achieved. 
         /// </summary>
-        /// <returns>Battle returns the player number of the winner, though it returns zero if war is triggered.</returns>
+        /// <returns>Battle returns the player number of the winner, though it returns zero if war is triggered. If their is an error it passed a -1 back.</returns>
         public int Battle()
         {
-            int playerOne = -1;
+            int playerWhoWon = -1;
 
-            if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
-            {
-                playerOne = 0;
-            }
-            else
-            {
-                if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+            if (player1StoredCards.Cards.Count != 0 && player2StoredCards.Cards.Count != 0)
+            { 
+                if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt == player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
                 {
-                    CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
-                    playerOne = 1;
+                    playerWhoWon = 0;
                 }
-                else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                else
                 {
-                    CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
-                    playerOne = 2;
+                    if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt > player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                    {
+                        CollectWinnings(player1Cards, player2StoredCards, player1StoredCards);
+                        playerWhoWon = 1;
+                    }
+                    else if (player1StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt < player2StoredCards.Cards.Where(card => card.FaceUp).Select(card => card).First().ValueInt)
+                    {
+                        CollectWinnings(player2Cards, player1StoredCards, player2StoredCards);
+                        playerWhoWon = 2;
+                    }
                 }
             }
 
-            return playerOne;
+            return playerWhoWon;
         }
         private void CollectWinnings(Deck winner, Deck loserStored, Deck winnerStored)
         {
@@ -126,20 +137,38 @@ namespace WarLib
             {
                 winner.Draw(winnerStored);
             };
+            player1Cards.Cards.Where(x => x.FaceUp).ToList().ForEach(x => x.FaceUp = false);
+            player2Cards.Cards.Where(x => x.FaceUp).ToList().ForEach(x => x.FaceUp = false);
         }
         /// <summary>
         /// Sets up the field for war
         /// </summary>
-        public void War()
+        /// <returns>If a player is unable to provide all the cards for to go to war their player number will be returned. If all players are able to provide all the cards to go to war then it will return a -1</returns>
+        public int War()
         {
-            player1StoredCards.Cards.Where(x => x.FaceUp).Select(x => x).ToList().ForEach(x => x.FaceUp = false);
-            player2StoredCards.Cards.Where(x => x.FaceUp).Select(x => x).ToList().ForEach(x => x.FaceUp = false);
+            int playerWhoWon = -1;
 
-            Player1LayCard(false);
-            Player1LayCard(true);
+            player1StoredCards.Cards.Where(x => x.FaceUp).ToList().ForEach(x => x.FaceUp = false);
+            player2StoredCards.Cards.Where(x => x.FaceUp).ToList().ForEach(x => x.FaceUp = false);
 
-            Player2LayCard(false);
-            Player2LayCard(true);
+            if (Player1LayCard(false))
+            {
+                if (Player1LayCard(true))
+                {
+                    playerWhoWon = 1;
+                }
+            }
+
+
+            if (Player2LayCard(false))
+            {
+                if (Player2LayCard(true))
+                {
+                    playerWhoWon = 2;
+                }
+            }
+
+            return playerWhoWon;
         }
         /// <summary>
         /// This Method returns a formated dictionary to be used in a save state of a game

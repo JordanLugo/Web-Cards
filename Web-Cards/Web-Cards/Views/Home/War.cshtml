@@ -7,23 +7,37 @@
 
 <h2>War</h2>
 
-<div class="button" id="draw-button">draw cards</div>
+<div class="button" id="draw-button">Draw and Battle Cards</div>
 <div class="button" id="reset-button">reset cards</div>
-<div class="button" id="battle-button">Battle!</div>
 <div id="play-area">
     filler coq
 </div>
 <div id="lower-info-area">
-    aaaaaaaaaaaaaa
+    
 </div>
 <script>
     $("#draw-button").click(function () {
-        $.ajax({
+        $.ajax({ //request card info
             url: "/Home/WarGetRound",
             type: "get",
             data: $("form").serialize(),
             success: function (result) {
-                $("#play-area").html(result);
+                //after request, get the html result
+                $("#play-area").html(result); //and set it to the card area for the user to see
+                $("#lower-info-area").html("");
+                $.ajax({ //now another request for the battle result
+                    url: "/Home/WarDoBattle",
+                    type: "get",
+                    data: $("form").serialize(),
+                    success: function (result) {
+                        if (result.indexOf("winner") === -1) { 
+                            $("#lower-info-area").html("<p>" + result + "</p>");
+                        }
+                        else {
+                            $("#lower-info-area").html(result + " press reset to play again");
+                        }
+                    }
+                });
             }
         });
     });
@@ -34,18 +48,8 @@
             type: "get",
             data: $("form").serialize(),
             success: function (result) {
-                
-            }
-        });
-    });
-
-    $("#battle-button").click(function () {
-        $.ajax({
-            url: "/Home/WarDoBattle",
-            type: "get",
-            data: $("form").serialize(),
-            success: function (result) {
-
+                $("#draw-button").css({ "display": "block" });
+                $("#battle-button").css({ "display": "none" });
             }
         });
     });

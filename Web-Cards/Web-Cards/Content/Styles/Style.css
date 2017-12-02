@@ -69,6 +69,10 @@ header {
     display: inline-block;
 }
 
+.adjusted-area {
+     /*use to fix the wierd misalignment*/
+}
+
 .button {
     background-color: aliceblue;
     border: 1px solid skyblue;
@@ -80,4 +84,22 @@ header {
 .small-card {
     max-height: 200px;
     width: auto;
+    display: block;
+}
+
+#lower-info-area {
+    color: red;
+    text-shadow: 0px 0px 5px red;
+}
+
+.loser-overlay-img {
+    z-index: 10;
+    width: 100px;
+    height: auto;
+    display: inline-block;
+}
+
+.loser-overlay-div {
+    margin-top: -150px;
+    margin-left: 20px;
 }

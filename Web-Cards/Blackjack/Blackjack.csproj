@@ -43,5 +43,11 @@
     <Compile Include="BlackjackSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CardLib\CardLib.csproj">
+      <Project>{7C48C0A9-3AAC-4F49-BAEB-B4BCF0589EA0}</Project>
+      <Name>CardLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
