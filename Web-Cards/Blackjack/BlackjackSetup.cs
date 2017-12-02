@@ -120,34 +120,43 @@ namespace Blackjack
         /// Checks a player for if they bust or not.
         /// </summary>
         /// <param name="playerNumber">This is the player number non-zero based so player 1 = 1, player 2 = 2, dealer = 0.</param>
-        /// <returns>Returns whether or not inputed player exceeded 21.</returns>
-        public bool CheckPlayerForBust(int playerNumber)
+        /// <returns>Returns whether or not inputed player exceeded 21, or returns null if invalid player number entered.</returns>
+        public bool? CheckPlayerForBust(int playerNumber)
         {
-            return CheckValueOfHand(playerNumber) > 21;
+            bool? bust = null;
+            int cardValues = CheckValueOfHand(playerNumber);
+            if (cardValues != 0)
+            {
+                bust = cardValues > 21;
+            }
+            return bust;
         }
         private int CheckValueOfHand(int playerNumber)
         {
             int valueOfCards = 0;
-            Deck player = playerNumber != 0 ? playersCards.ElementAt(playerNumber - 1) : dealersCards;
+            if (playerNumber < playersCards.Count)
+            {
+                Deck player = playerNumber != 0 ? playersCards.ElementAt(playerNumber - 1) : dealersCards;
 
-            foreach (Card card in player.Cards)
-            {
-                if (card.ValueInt != 1)
+                foreach (Card card in player.Cards)
                 {
-                    valueOfCards += card.ValueInt;
-                }
-            }
-            foreach (Card card in player.Cards)
-            {
-                if (card.ValueInt == 1)
-                {
-                    if (valueOfCards + 11 > 21)
+                    if (card.ValueInt != 1)
                     {
-                        valueOfCards += 1;
+                        valueOfCards += card.ValueInt;
                     }
-                    else
+                }
+                foreach (Card card in player.Cards)
+                {
+                    if (card.ValueInt == 1)
                     {
-                        valueOfCards += 11;
+                        if (valueOfCards + 11 > 21)
+                        {
+                            valueOfCards += 1;
+                        }
+                        else
+                        {
+                            valueOfCards += 11;
+                        }
                     }
                 }
             }
@@ -231,6 +240,78 @@ namespace Blackjack
             {
                 return null;
             }
+        }
+        /// <summary>
+        /// This is the AI logic for the easy difficulty opponents.
+        /// </summary>
+        /// <param name="playerNumber">This is the player number non-zero based so player 1 = 1, player 2 = 2.</param>
+        /// <returns>Returns whether the AI wants to hit or stand it will return null if playerNumber is invalid range</returns>
+        public bool? EasyAI(int playerNumber)
+        {
+            bool? hitStand = null;
+            int valueOfHand = CheckValueOfHand(playerNumber);
+
+            if (playerNumber != 0 && valueOfHand != 0)
+            {
+                return rand.Next(0, 22 - valueOfHand) == 0;
+            }
+
+            return hitStand;
+        }
+        /// <summary>
+        /// This is the AI logic for the Medium difficulty opponents.
+        /// </summary>
+        /// <param name="playerNumber">This is the player number non-zero based so player 1 = 1, player 2 = 2.</param>
+        /// <returns>Returns whether the AI wants to hit or stand it will return null if playerNumber is invalid range</returns>
+        public bool? MediumAI(int playerNumber)
+        {
+            int valueOfHand = CheckValueOfHand(playerNumber), dealersUpCardValue = dealersCards.Cards.Where(card => card.FaceUp).First().ValueInt;
+
+            if (playerNumber != 0 && valueOfHand != 0)
+            {
+                if (playersCards.ElementAt(playerNumber - 1).Cards.Where(card => card.ValueInt == 1).ToList().Count == 0)
+                {
+                    switch (dealersUpCardValue)
+                    {
+                        case 1:                        
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                            return valueOfHand >= 17;
+                        case 4:
+                        case 5:
+                        case 6:
+                            return valueOfHand >= 12;
+                        case 2:
+                        case 3:
+                            return valueOfHand >= 13;
+                    }
+                }
+                else
+                {
+                    return CheckValueOfHand(playerNumber) >= 18;
+                }
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// This is the AI logic for the Hard difficulty opponents.
+        /// </summary>
+        /// <param name="playerNumber">This is the player number non-zero based so player 1 = 1, player 2 = 2.</param>
+        /// <returns>Returns whether the AI wants to hit or stand it will return null if playerNumber is invalid range</returns>
+        public bool? HardAI(int playerNumber)
+        {
+            bool? hitStand = null;
+            int valueOfHand = CheckValueOfHand(playerNumber);
+
+            if (playerNumber != 0 && valueOfHand != 0)
+            {
+                return drawDeck.Cards.First().ValueInt + valueOfHand < 21;
+            }
+
+            return hitStand;
         }
     }
 }
