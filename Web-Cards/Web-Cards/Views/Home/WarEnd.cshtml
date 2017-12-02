@@ -4,29 +4,30 @@
 {
     if (ViewBag.Winner == "Player 1")
     {
+        <p style="display: none">GameEnd</p>
         <div>
             <div id="enemy-area">
-                <p>Player 2 Lost!</p>
-                <img class="small-card" src="~/Content/Images/Cards/card_back_burned.PNG" />
-                <div class="loser-overlay-div"><img class="loser-overlay-img" src="~/Content/Images/explosion.gif" /></div>
+                <p class="adjusted-area">The Computer Lost!</p>
+                <img class="small-card adjusted-area" src="~/Content/Images/Cards/card_back_burned.PNG" />
+                <div class="loser-overlay-div"><img class="loser-overlay-img adjusted-area" src="~/Content/Images/explosion.gif" /></div>
             </div>
-            <div id="player-area">
-                <p>Player 1 Wins!</p>
-                <img class="small-card" src="~/Content/Images/Cards/card_back.PNG" />
+            <div id="player-area" class="adjusted-area">
+                <p class="adjusted-area">You Win!</p>
+                <img class="small-card adjusted-area" src="~/Content/Images/Cards/card_back.PNG" />
             </div>
         </div>
     }
     else
     {
         <div>
-            <div id="enemy-area">
-                <p>Player 2 Won!</p>
-                <img class="small-card" src="~/Content/Images/Cards/card_back.PNG" />
+            <div id="enemy-area" class="adjusted-area">
+                <p class="adjusted-area">The Computer Won!</p>
+                <img class="small-card adjusted-area" src="~/Content/Images/Cards/card_back.PNG" />
             </div>
             <div id="player-area">
-                <p>Player 1 Lost!</p>
-                <img class="small-card" src="~/Content/Images/Cards/card_back_burned.PNG" />
-                <div class="loser-overlay-div"><img class="loser-overlay-img" src="~/Content/Images/explosion.gif" /></div>
+                <p class="adjusted-area">You Lost!</p>
+                <img class="small-card adjusted-area" src="~/Content/Images/Cards/card_back_burned.PNG" />
+                <div class="loser-overlay-div"><img class="loser-overlay-img adjusted-area" src="~/Content/Images/explosion.gif" /></div>
             </div>
         </div>
     }

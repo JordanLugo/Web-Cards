@@ -7,13 +7,14 @@
 
 <h2>War</h2>
 
-<div class="button" id="draw-button">Draw and Battle Cards</div>
-<div class="button" id="reset-button">reset cards</div>
 <div id="play-area">
-    filler coq
+    Draw cards to play!
 </div>
-<div id="lower-info-area">
-    
+<div id="lower-info-area"></div>
+<div>
+    <div class="button adjusted-area" id="draw-button">Draw and Battle Cards</div>
+    <div class="adjusted-area" id="ghost-button" style="display: none;">Waiting...</div>
+    <div class="button adjusted-area" id="reset-button" style="display: inline-block">reset cards</div>
 </div>
 <script>
     $("#draw-button").click(function () {
@@ -25,19 +26,33 @@
                 //after request, get the html result
                 $("#play-area").html(result); //and set it to the card area for the user to see
                 $("#lower-info-area").html("");
-                $.ajax({ //now another request for the battle result
-                    url: "/Home/WarDoBattle",
-                    type: "get",
-                    data: $("form").serialize(),
-                    success: function (result) {
-                        if (result.indexOf("winner") === -1) { 
-                            $("#lower-info-area").html("<p>" + result + "</p>");
+                $("#draw-button").css({ "display": "none" });
+                $("#ghost-button").css({ "display": "inline-block" });
+                setTimeout(function () {
+                    $("#draw-button").css({ "display": "inline-block" });
+                    $("#ghost-button").css({ "display": "none" });
+
+                }, 1000);
+                if (result.indexOf("GameEnd") === -1) { //game did not end
+                    $.ajax({ //now another request for the battle result
+                        url: "/Home/WarDoBattle",
+                        type: "get",
+                        data: $("form").serialize(),
+                        success: function (result) {
+                            if (result.indexOf("winner") === -1) {
+                                if (result.indexOf("War") === -1) {
+                                    $("#lower-info-area").html("<h3 class=\"notification-text\">" + result + "</h3>");
+                                }
+                                else {
+                                    $("#lower-info-area").html("<h3 class=\"war-warning-pulsate notification-text\">" + result + "</h3>");
+                                }
+                            }
+                            else {
+                                $("#lower-info-area").html("<h3 class=\"notification-text\">" + result + " press reset to play again</h3>");
+                            }
                         }
-                        else {
-                            $("#lower-info-area").html(result + " press reset to play again");
-                        }
-                    }
-                });
+                    });
+                }
             }
         });
     });
@@ -50,6 +65,7 @@
             success: function (result) {
                 $("#draw-button").css({ "display": "block" });
                 $("#battle-button").css({ "display": "none" });
+                $("#player-area").html("");
             }
         });
     });
