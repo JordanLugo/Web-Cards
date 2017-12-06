@@ -52,7 +52,12 @@ namespace Blackjack
             drawDeck.ResetDeck();
             discardPile.ClearDeck();
             dealersCards.ClearDeck();
-            playersCards.ForEach(deck => deck.ClearDeck());
+            playersCards.Clear();
+
+            for (int player = 0; player < numberOfPlayers; player++)
+            {
+                playersCards.Add(new Deck());
+            }
 
             drawDeck.Cards.Where(cards => cards.Suit.Equals("Jack", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
             drawDeck.Cards.Where(cards => cards.Suit.Equals("Queen", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
