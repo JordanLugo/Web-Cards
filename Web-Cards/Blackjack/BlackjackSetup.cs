@@ -40,7 +40,11 @@ namespace Blackjack
         /// <returns>A list of cards of specified player</returns>
         public List<Card> GetPlayersCardsByPlayerNumber(int playerNumber)
         {
-            return playersCards.ElementAt(playerNumber - 1).Cards;
+            if (playersCards.Count > numberOfPlayers)
+            {
+                return playersCards.ElementAt(playerNumber - 1).Cards;
+            }
+            throw new ArgumentException($"Player {playerNumber} not found.");
         }
         /// <summary>
         /// This is a method that clears everything a rebuilds a new game from scratch.
@@ -139,7 +143,7 @@ namespace Blackjack
         public int CheckValueOfHand(int playerNumber)
         {
             int valueOfCards = 0;
-            if (playerNumber < playersCards.Count)
+            if (playerNumber > playersCards.Count)
             {
                 Deck player = playerNumber != 0 ? playersCards.ElementAt(playerNumber - 1) : dealersCards;
 
@@ -165,7 +169,6 @@ namespace Blackjack
                     }
                 }
             }
-
             return valueOfCards;
         }
         /// <summary>
