@@ -31,7 +31,7 @@ namespace Blackjack
         public int DrawDeckCount { get { return drawDeck.Cards.Count; } }
         public BlackjackSetup(int numberOfPlayers)
         {
-            ResetNewGame(numberOfPlayers);
+            NewGame(numberOfPlayers);
         }
         /// <summary>
         /// This returns the cards that a player has denoted by their player number
@@ -40,7 +40,7 @@ namespace Blackjack
         /// <returns>A list of cards of specified player</returns>
         public List<Card> GetPlayersCardsByPlayerNumber(int playerNumber)
         {
-            if (playersCards.Count > numberOfPlayers)
+            if (playersCards.Count >= numberOfPlayers)
             {
                 return playersCards.ElementAt(playerNumber - 1).Cards;
             }
@@ -50,7 +50,7 @@ namespace Blackjack
         /// This is a method that clears everything a rebuilds a new game from scratch.
         /// </summary>
         /// <param name="numberOfPlayers">This is the number of players paying the game.</param>
-        public void ResetNewGame(int numberOfPlayers)
+        public void NewGame(int numberOfPlayers)
         {
             this.numberOfPlayers = numberOfPlayers;
             drawDeck.ResetDeck();
@@ -63,11 +63,37 @@ namespace Blackjack
                 playersCards.Add(new Deck());
             }
 
-            drawDeck.Cards.Where(cards => cards.Suit.Equals("Jack", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
-            drawDeck.Cards.Where(cards => cards.Suit.Equals("Queen", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
-            drawDeck.Cards.Where(cards => cards.Suit.Equals("King", StringComparison.CurrentCultureIgnoreCase)).ToList().ForEach(card => card.ValueInt = 10);
+            EditFaceCardValues();
 
             ReshuffleDeck();
+        }
+        private void EditFaceCardValues()
+        {
+            for (int cards = 0; cards < drawDeck.Cards.Count; cards++)
+            {
+                if (drawDeck.Cards.ElementAt(cards).Suit.Equals("Jack") || drawDeck.Cards.ElementAt(cards).Suit.Equals("Queen") || drawDeck.Cards.ElementAt(cards).Suit.Equals("King"))
+                {
+                    drawDeck.Cards.ElementAt(cards).ValueInt = 10;
+                }
+            }
+        }
+        /// <summary>
+        /// This method discards all the cards from everyone and deals out new cards.
+        /// </summary>
+        public void NewRound()
+        {
+            for (int player = 0; player < numberOfPlayers; player++)
+            {
+                while (playersCards.ElementAt(player).Cards.Count != 0)
+                {
+                    discardPile.Draw(playersCards.ElementAt(player));
+                }
+            }
+            while (dealersCards.Cards.Count != 0)
+            {
+                discardPile.Draw(dealersCards);
+            }
+            DealerDealFirstCardSet();
         }
         /// <summary>
         /// This method is used to deal out a starting round of cards to the player and itself.
