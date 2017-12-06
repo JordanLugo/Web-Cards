@@ -1,14 +1,14 @@
 ﻿@model WarLib.WarSetup
 <div>
-<div id="enemy-area">
+<div id="enemy-area-war">
     <p class="left-align-text">
         @if(Model.Player2CardsCount >= 40)
         {
-            <span class="win-warning">@Model.Player2CardsCount</span>
+            <span class="win-warning">Computer's hand size: @Model.Player2CardsCount</span>
         }
         else if (Model.Player2CardsCount <= 10)
         {
-            <span class="lose-warning">@Model.Player2CardsCount</span>
+            <span class="lose-warning">Computer's hand size: @Model.Player2CardsCount</span>
         }
         else
         {
@@ -26,15 +26,15 @@
             : "card_back.png")" />
     }
 </div>
-<div id="player-area">
+<div id="player-area-war">
     <p class="right-align-text">
         @if (Model.Player1CardsCount >= 40)
         {
-            <span class="win-warning">@Model.Player1CardsCount</span>
+            <span class="win-warning">Your hand size: @Model.Player1CardsCount</span>
         }
         else if (Model.Player1CardsCount <= 10)
         {
-            <span class="lose-warning">@Model.Player1CardsCount</span>
+            <span class="lose-warning">Your hand size: @Model.Player1CardsCount</span>
         }
         else
         {

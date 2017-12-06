@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CardsLib;
+using Blackjack;
 
 namespace Web_Cards.Controllers
 {
@@ -12,6 +13,8 @@ namespace Web_Cards.Controllers
     {
 
 		static WarSetup WarGame = new WarSetup();
+        static BlackjackSetup bjs = new BlackjackSetup(1);
+        static bool bjRoundStarted = false;
         public ActionResult Index()
         {
             return View(WarGame);
@@ -66,6 +69,84 @@ namespace Web_Cards.Controllers
         {
             WarGame.ResetNewGame();
             return "War Reset ok";
+        }
+
+        public ActionResult BlackJack()
+        {
+            if (!bjRoundStarted)
+            {
+                bjs.DealerDealFirstCardSet();
+                if (bjs.DealersCards.Sum(x => x.ValueInt) == 21)
+                {
+                    bjs.DealerFlipsFaceDownCard();
+                }
+                if (bjs.GetPlayersCardsByPlayerNumber(1).Sum(x => x.ValueInt) == 21)
+                {
+
+                }
+                bjRoundStarted = true;
+            }
+
+            return View(bjs);
+        }
+
+        public ActionResult BlackJackGetRound(string type)
+        {
+            if (type == "hit")
+            {
+                bjs.HitPlayer(1);
+                if (bjs.CheckPlayerForBust(1) ?? false)
+                {
+                    ViewBag.Notify = "You busted";
+                    ViewBag.Reset = true;
+                }
+            }
+            else if(type == "hold")
+            {
+                bjs.DealerFlipsFaceDownCard();
+                while (bjs.CheckIfDealerNeedsToHit())
+                {
+                    bjs.HitPlayer(0);
+                }
+                if (bjs.CheckPlayerForBust(0) ?? false)
+                {
+                    ViewBag.Notify = "The dealer busted, you won!";
+                    ViewBag.Reset = true;
+                }
+                else if (bjs.CheckPlayerForBust(1) ?? false)
+                {
+                    ViewBag.Notify = "You busted";
+                    ViewBag.Reset = true;
+                }
+                else if (21-bjs.CheckValueOfHand(0) < 21-bjs.CheckValueOfHand(1))
+                {
+                    ViewBag.Notify = "The dealer is wins!";
+                    ViewBag.Reset = true;
+                }
+                else if (21 - bjs.CheckValueOfHand(0) > 21 - bjs.CheckValueOfHand(1))
+                {
+                    ViewBag.Notify = "You win!";
+                    ViewBag.Reset = true;
+                }
+                else if (21 - bjs.CheckValueOfHand(0) == 21 - bjs.CheckValueOfHand(1))
+                {
+                    ViewBag.Notify = "Tie, everybody lost";
+                    ViewBag.Reset = true;
+                }
+            }
+            else if(type == "reset")
+            {
+                bjs.NewRound();
+                if (bjs.DealersCards.Sum(x => x.ValueInt) == 21)
+                {
+                    bjs.DealerFlipsFaceDownCard();
+                }
+                if (bjs.GetPlayersCardsByPlayerNumber(1).Sum(x => x.ValueInt) == 21)
+                {
+
+                }
+            }
+            return View(bjs);
         }
     }
 }
