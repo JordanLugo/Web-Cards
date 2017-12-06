@@ -143,7 +143,7 @@ namespace Blackjack
         public int CheckValueOfHand(int playerNumber)
         {
             int valueOfCards = 0;
-            if (playerNumber > playersCards.Count)
+            if (playerNumber <= playersCards.Count)
             {
                 Deck player = playerNumber != 0 ? playersCards.ElementAt(playerNumber - 1) : dealersCards;
 
