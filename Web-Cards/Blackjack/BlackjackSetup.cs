@@ -136,7 +136,7 @@ namespace Blackjack
             }
             return bust;
         }
-        private int CheckValueOfHand(int playerNumber)
+        public int CheckValueOfHand(int playerNumber)
         {
             int valueOfCards = 0;
             if (playerNumber < playersCards.Count)
