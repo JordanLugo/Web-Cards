@@ -324,6 +324,8 @@
     <Content Include="Views\Home\War.cshtml" />
     <Content Include="Views\Home\WarGetRound.cshtml" />
     <Content Include="Views\Home\WarEnd.cshtml" />
+    <Content Include="Views\Home\BlackJack.cshtml" />
+    <Content Include="Views\Home\BlackJackGetRound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +344,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Blackjack\Blackjack.csproj">
+      <Project>{7356e461-f441-4683-980f-d5ae87eb7a7f}</Project>
+      <Name>Blackjack</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CardLib\CardLib.csproj">
       <Project>{7c48c0a9-3aac-4f49-baeb-b4bcf0589ea0}</Project>
       <Name>CardLib</Name>

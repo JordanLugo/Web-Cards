@@ -8,7 +8,8 @@
 <h2>War</h2>
 
 <div id="play-area">
-    Draw cards to play!
+    <p>Draw some cards!</p>
+    @{ Html.RenderPartial("WarGetRound", Model); }
 </div>
 <div id="lower-info-area"></div>
 <div>

@@ -1,0 +1,54 @@
+﻿@model Blackjack.BlackjackSetup
+
+@{
+    ViewBag.Title = "BlackJack";
+    Layout = "~/Views/Layouts/_MainLayoutPage.cshtml";
+}
+
+<h2>BlackJack</h2>
+
+<div id="play-area">
+    @{Html.RenderPartial("BlackJackGetRound", Model); }
+</div>
+<div id="lower-info-area"></div>
+<div>
+    <div class="button adjusted-area" id="hit-button">Hit</div>
+    <div class="button adjusted-area" id="hold-button" style="display: inline-block">Hold</div>
+    <div class="button adjusted-area" id="reset-button" style="display: none">New round</div>
+</div>
+<script>
+    $("#hit-button").click(function () {
+        $.ajax({
+            url: "/Home/BlackJackGetRound",
+            type: "get",
+            data: {"type": "hit"},
+            success: function (result) {
+                $("#play-area").html(result);
+            }
+        });
+    });
+    $("#hold-button").click(function () {
+        $.ajax({
+            url: "/Home/BlackJackGetRound",
+            type: "get",
+            data: { "type": "hold" },
+            success: function (result) {
+                $("#play-area").html(result);
+                $("#hit-button").css({ "display": "none" });
+            }
+        });
+    });
+    $("#reset-button").click(function () {
+        $.ajax({
+            url: "/Home/BlackJackGetRound",
+            type: "get",
+            data: { "type": "reset" },
+            success: function (result) {
+                $("#play-area").html(result);
+                $("#reset-button").css({ "display": "none" });
+                $("#hit-button").css({ "display": "inline-block" });
+                $("#hold-button").css({ "display": "inline-block" });
+            }
+        });
+    });
+</script>

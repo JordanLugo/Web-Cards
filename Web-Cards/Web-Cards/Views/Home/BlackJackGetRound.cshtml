@@ -1,0 +1,31 @@
+﻿@model Blackjack.BlackjackSetup
+
+<div>
+    <p>@ViewBag.Notify</p>
+    <div id="player-area-bj">
+        @foreach (CardsLib.Card c in Model.GetPlayersCardsByPlayerNumber(1))
+        {
+            <img class="small-card" style="display:inline-block" src="~/Content/Images/Cards/@(
+            c.FaceUp == true
+            ? (c.ValueInt >= 10 && c.Value != "Ten" || c.ValueInt == 1 ? $"{c.Value}_of_{c.Suit}.svg" : $"{c.ValueInt}_of_{c.Suit}.svg")
+            : "card_back.png")" />
+        }
+    </div>
+    <div id="enemy-area-bj">
+        @foreach (CardsLib.Card c in Model.DealersCards)
+        {
+            <img class="small-card" style="display:inline-block" src="~/Content/Images/Cards/@(
+            c.FaceUp == true
+            ? (c.ValueInt >= 10 && c.Value != "Ten" || c.ValueInt == 1 ? $"{c.Value}_of_{c.Suit}.svg" : $"{c.ValueInt}_of_{c.Suit}.svg")
+            : "card_back.png")" />
+        }
+    </div>
+    @if (ViewBag.Reset ?? false)
+    {
+        <script>
+            $("#reset-button").css({ "display": "inline-block" });
+            $("#hit-button").css({ "display": "none" });
+            $("#hold-button").css({ "display": "none" });
+        </script>
+    }
+</div>
