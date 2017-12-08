@@ -82,6 +82,11 @@ header {
 
 .adjusted-area {
      vertical-align: top;
+     margin: auto;
+}
+
+.centered-buttons {
+    align-content: center;
 }
 
 .button {
@@ -170,12 +175,14 @@ header {
     to {
         color: red;
         border-color: red;
+        text-shadow: 0px 0px 5px red;
     }
 }
 @keyframes win-warning-anim {
     to {
         color: cyan;
         border-color: cyan;
+        text-shadow: 0px 0px 5px cyan;
     }
 }
 
@@ -195,4 +202,8 @@ header {
         font-size: 15px;
         color: yellow;
     }
+}
+
+.game-title {
+    text-align: center;
 }
