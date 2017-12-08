@@ -5,7 +5,7 @@
     Layout = "~/Views/Layouts/_MainLayoutPage.cshtml";
 }
 
-<h2>War</h2>
+<h1 class="game-title">War</h1>
 
 <div id="play-area">
     <p>Draw some cards!</p>
@@ -15,7 +15,7 @@
 <div>
     <div class="button adjusted-area" id="draw-button">Draw and Battle Cards</div>
     <div class="adjusted-area" id="ghost-button" style="display: none;">Waiting...</div>
-    <div class="button adjusted-area" id="reset-button" style="display: inline-block">reset cards</div>
+    <div class="button adjusted-area" id="reset-button" style="display: none">New Game</div>
 </div>
 <script>
     $("#draw-button").click(function () {
@@ -50,6 +50,7 @@
                             }
                             else {
                                 $("#lower-info-area").html("<h3 class=\"notification-text\">" + result + " press reset to play again</h3>");
+                                $("#reset-button").css({ "display": "inline-block" });
                             }
                         }
                     });
@@ -67,6 +68,7 @@
                 $("#draw-button").css({ "display": "block" });
                 $("#battle-button").css({ "display": "none" });
                 $("#player-area").html("");
+                $("#reset-button").css({ "display": "none" });
             }
         });
     });

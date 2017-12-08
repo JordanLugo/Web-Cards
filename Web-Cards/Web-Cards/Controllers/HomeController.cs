@@ -32,22 +32,35 @@ namespace Web_Cards.Controllers
 
         public ActionResult WarGetRound()
         {
-            bool resP1 = WarGame.Player1LayCard(true);
-            bool resP2 = WarGame.Player2LayCard(true);
-            if (resP1 || resP2)
+            if (WarGame.Player2CardsCount > 0 && WarGame.Player1CardsCount > 0)
+            {
+                bool resP1 = WarGame.Player1CardsCount > 0 ? WarGame.Player1LayCard(true) : true;
+                bool resP2 = WarGame.Player2CardsCount > 0 ? WarGame.Player2LayCard(true) : true;
+                if (resP1 || resP2)
+                {
+                    ViewBag.GameEnd = true;
+                    ViewBag.Winner = resP1 ? "Player 2" : "Player 1";
+                    return View("WarEnd");
+                }
+                else {
+                    return View(WarGame);
+                }
+            }
+            else
             {
                 ViewBag.GameEnd = true;
-                ViewBag.Winner = resP1 ? "Player 2" : "Player 1";
+                ViewBag.Winner = WarGame.Player1CardsCount > 0 ? "Player 2" : "Player 1";
                 return View("WarEnd");
-            }
-            else {
-                return View(WarGame);
             }
         }
 
         public string WarDoBattle()
         {
-            int winner = WarGame.Battle();
+            int winner = -1;
+            if (WarGame.Player1CardsCount > 0 && WarGame.Player2CardsCount > 0)
+            {
+                winner = WarGame.Battle();
+            }
             if (winner == 0)
             {
                 WarGame.War();
@@ -146,10 +159,9 @@ namespace Web_Cards.Controllers
                 if (bjs.DealersCards.Sum(x => x.ValueInt) == 21)
                 {
                     bjs.DealerFlipsFaceDownCard();
-                }
-                if (bjs.GetPlayersCardsByPlayerNumber(1).Sum(x => x.ValueInt) == 21)
-                {
-
+                    ViewBag.Notify = "The dealer got a natural!";
+                    ViewBag.NotifyClassName = "lose-warning";
+                    ViewBag.Reset = true;
                 }
             }
             return View(bjs);
