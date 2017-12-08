@@ -170,60 +170,53 @@ namespace WarLib
             return playerWhoWon;
         }
         /// <summary>
-        /// This Method returns a formated dictionary to be used in a save state of a game
+        /// This method serilaizes the current state of Blackjack in a byte[].
         /// </summary>
-        /// <returns>A Dictionary(string List<Card>) that can easily saved and loaded back in.></returns>
+        /// <returns>Returns a byte[] of the serialized data of the curret state of this BlackjackSetup.</returns>
         public byte[] SaveState()
         {
-            Dictionary<string, List<Card>> saveData = new Dictionary<string, List<Card>>();
+            MemoryStream saveMemoryStream = new MemoryStream();
+            BinaryFormatter saveBinaryFormatter = new BinaryFormatter();
+            Dictionary<string, object> saveData = new Dictionary<string, object>();
+            byte[] serializedData;
 
+            saveData.Add("Player1HeldCards", player1Cards);
+            saveData.Add("Player2HeldCards", player2Cards);
+            saveData.Add("Player1StoredCards", player1StoredCards);
+            saveData.Add("Player2StoredCards", player2StoredCards);
 
-            saveData.Add("Player1HeldCards", player1Cards.Cards.ToList());
-            saveData.Add("Player2HeldCards", player2Cards.Cards.ToList());
-            saveData.Add("Player1StoredCards", player1StoredCards.Cards.ToList());
-            saveData.Add("Player2StoredCards", player2StoredCards.Cards.ToList());
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
+            saveBinaryFormatter.Serialize(saveMemoryStream, saveData);
 
-            bf.Serialize(stream, saveData);
-
-            byte[] serializedData = stream.ToArray();
-            stream.Close();
+            serializedData = saveMemoryStream.ToArray();
+            saveMemoryStream.Close();
 
             return serializedData;
         }
         /// <summary>
-        /// This method will load all the data from the byte[] in to the game and return the current player's turn
+        /// This method takes in a byte[] of data and deserializes it in to the current BlackjackSetup.
         /// </summary>
-        /// <param name="data">This is the byte[] data that was serialized to save it.</param>
-        /// <returns>Returns an bool for it the save data entered was correctly deserialized.</returns>
-        public bool LoadState(byte[] data)
+        /// <param name="data">This is the byte[] data that is being deserialized in to the game.</param>
+        public void LoadState(byte[] data)
         {
-            bool validInput = false;
+            MemoryStream loadMemoryStream = new MemoryStream();
+            BinaryFormatter loadBinaryFormatter = new BinaryFormatter();
 
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
+            loadMemoryStream.Write(data, 0, data.Length);
+            loadMemoryStream.Position = 0;
+            Dictionary<string, object> loadData = (Dictionary<string, object>)loadBinaryFormatter.Deserialize(loadMemoryStream);
+            loadMemoryStream.Close();
 
-            stream.Write(data, 0, data.Length);
-            stream.Position = 0;
-            Dictionary<string, List<Card>> test = (Dictionary<string, List<Card>>)bf.Deserialize(stream);
-
-            if (test.Keys.Contains("Player1HeldCards") && test.Keys.Contains("Player2HeldCards") && test.Keys.Contains("Player1StoredCards") && test.Keys.Contains("Player2StoredCards"))
+            if (loadData.Keys.Contains("Player1HeldCards") && loadData.Keys.Contains("Player2HeldCards") && loadData.Keys.Contains("Player1StoredCards") && loadData.Keys.Contains("Player2StoredCards"))
             {
-                player1Cards.ClearDeck();
-                player2Cards.ClearDeck();
-                player1StoredCards.ClearDeck();
-                player2StoredCards.ClearDeck();
-
-                player1Cards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1HeldCards")));
-                player2Cards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2HeldCards")));
-                player1StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player1StoredCards")));
-                player2StoredCards.Cards.AddRange(test.Values.ElementAt(test.Keys.ToList().IndexOf("Player2StoredCards")));
-
-                validInput = true;
+                player1Cards = loadData["Player1HeldCards"] as Deck;
+                player2Cards = loadData["Player2HeldCards"] as Deck;
+                player1StoredCards = loadData["Player1StoredCards"] as Deck;
+                player2StoredCards = loadData["Player2StoredCards"] as Deck;
             }
-            stream.Close();
-            return validInput;
+            else
+            {
+                throw new ArgumentException("The byte[] data you provided in incapable to be converted to Blackjack game data.");
+            }
         }
 
       

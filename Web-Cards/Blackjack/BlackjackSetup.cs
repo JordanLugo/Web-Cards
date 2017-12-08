@@ -250,6 +250,7 @@ namespace Blackjack
             loadMemoryStream.Write(data, 0, data.Length);
             loadMemoryStream.Position = 0;
             Dictionary<string, object> loadData = (Dictionary<string, object>)loadBinaryFormatter.Deserialize(loadMemoryStream);
+            loadMemoryStream.Close();
 
             if (loadData.Keys.Contains("NumberOfPlayers") && loadData.Keys.Contains("PlayersCards") && loadData.Keys.Contains("DealersCards") && loadData.Keys.Contains("DrawDeck") && loadData.Keys.Contains("DrawPile") && loadData.Keys.Contains("DiscardPile") && loadData.Keys.Contains("CurrentPlayerTurn"))
             {
@@ -258,8 +259,6 @@ namespace Blackjack
                 dealersCards = loadData["DealersCards"] as Deck;
                 drawDeck = loadData["DrawDeck"] as Deck;
                 discardPile = loadData["DiscardPile"] as Deck;
-                loadMemoryStream.Close();
-
                 return (int)loadData["CurrentPlayerTurn"];
             }
             else
