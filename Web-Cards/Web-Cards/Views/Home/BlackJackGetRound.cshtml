@@ -1,16 +1,7 @@
 ﻿@model Blackjack.BlackjackSetup
 
 <div>
-    <p>@ViewBag.Notify</p>
-    <div id="player-area-bj">
-        @foreach (CardsLib.Card c in Model.GetPlayersCardsByPlayerNumber(1))
-        {
-            <img class="small-card" style="display:inline-block" src="~/Content/Images/Cards/@(
-            c.FaceUp == true
-            ? (c.ValueInt >= 10 && c.Value != "Ten" || c.ValueInt == 1 ? $"{c.Value}_of_{c.Suit}.svg" : $"{c.ValueInt}_of_{c.Suit}.svg")
-            : "card_back.png")" />
-        }
-    </div>
+    <p style="font-size: 24px;">The dealer's hand</p>
     <div id="enemy-area-bj">
         @foreach (CardsLib.Card c in Model.DealersCards)
         {
@@ -20,6 +11,17 @@
             : "card_back.png")" />
         }
     </div>
+    <p style="font-size: 24px;">Your hand:</p>
+    <div id="player-area-bj">
+        @foreach (CardsLib.Card c in Model.GetPlayersCardsByPlayerNumber(1))
+        {
+            <img class="small-card" style="display:inline-block" src="~/Content/Images/Cards/@(
+            c.FaceUp == true
+            ? (c.ValueInt >= 10 && c.Value != "Ten" || c.ValueInt == 1 ? $"{c.Value}_of_{c.Suit}.svg" : $"{c.ValueInt}_of_{c.Suit}.svg")
+            : "card_back.png")" />
+        }
+    </div>
+    <p><span class="@ViewBag.NotifyClassName" style="font-size: 30px;">@ViewBag.Notify</span></p>
     @if (ViewBag.Reset ?? false)
     {
         <script>

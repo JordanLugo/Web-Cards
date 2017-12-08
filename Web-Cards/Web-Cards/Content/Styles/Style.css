@@ -164,7 +164,7 @@ header {
     animation-timing-function: cubic-bezier(.8,0,.2,1);
     border: 1px solid transparent;
     border-radius: 50px;
-    padding: 5px;
+    padding: 10px;
 }
 @keyframes lose-warning-anim {
     to {

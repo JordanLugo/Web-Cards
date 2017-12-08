@@ -98,6 +98,7 @@ namespace Web_Cards.Controllers
                 if (bjs.CheckPlayerForBust(1) ?? false)
                 {
                     ViewBag.Notify = "You busted";
+                    ViewBag.NotifyClassName = "lose-warning";
                     ViewBag.Reset = true;
                 }
             }
@@ -111,26 +112,31 @@ namespace Web_Cards.Controllers
                 if (bjs.CheckPlayerForBust(0) ?? false)
                 {
                     ViewBag.Notify = "The dealer busted, you won!";
+                    ViewBag.NotifyClassName = "win-warning";
                     ViewBag.Reset = true;
                 }
                 else if (bjs.CheckPlayerForBust(1) ?? false)
                 {
                     ViewBag.Notify = "You busted";
+                    ViewBag.NotifyClassName = "lose-warning";
                     ViewBag.Reset = true;
                 }
                 else if (21-bjs.CheckValueOfHand(0) < 21-bjs.CheckValueOfHand(1))
                 {
-                    ViewBag.Notify = "The dealer is wins!";
+                    ViewBag.Notify = "The dealer is wins! You lost";
+                    ViewBag.NotifyClassName = "lose-warning";
                     ViewBag.Reset = true;
                 }
                 else if (21 - bjs.CheckValueOfHand(0) > 21 - bjs.CheckValueOfHand(1))
                 {
                     ViewBag.Notify = "You win!";
+                    ViewBag.NotifyClassName = "win-warning";
                     ViewBag.Reset = true;
                 }
                 else if (21 - bjs.CheckValueOfHand(0) == 21 - bjs.CheckValueOfHand(1))
                 {
                     ViewBag.Notify = "Tie, everybody lost";
+                    ViewBag.NotifyClassName = "lose-warning";
                     ViewBag.Reset = true;
                 }
             }
