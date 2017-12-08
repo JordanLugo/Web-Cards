@@ -21,12 +21,25 @@ namespace DatabaseManager
         {
             using (CardsEntities db = new CardsEntities())
             {
+                string savedNames = "";
+                int iteration = 1;
+                foreach (SaveTable saves in db.SaveTables.Where(save => save.gameId == gameID && save.userId.Equals(user)))
+                {
+                    if (iteration == 1)
+                    {
+                        savedNames = saves.saveName;
+                    }
+                    if (saves.saveName.Equals(savedNames))
+                    { 
+                        savedNames = saves.saveName + $"_({iteration++})";
+                    }
+                }
                 SaveTable newGameSave = new SaveTable()
                 {
                     userId = user,
                     gameId = gameID,
                     savedData = currentGame,
-                    saveName = saveName,
+                    saveName = savedNames,
                     GameTable = db.GameTables.Where(game => game.id == gameID).First()
                 };
                 db.SaveTables.Add(newGameSave);
