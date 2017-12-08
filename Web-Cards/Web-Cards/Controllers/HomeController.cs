@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using CardsLib;
 using Blackjack;
+using DatabaseManager;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Web_Cards.Controllers
 {
@@ -14,6 +17,7 @@ namespace Web_Cards.Controllers
 
 		static WarSetup WarGame = new WarSetup();
         static BlackjackSetup bjs = new BlackjackSetup(1);
+        static Manager m = new Manager();
         static bool bjRoundStarted = false;
         public ActionResult Index()
         {
@@ -49,7 +53,7 @@ namespace Web_Cards.Controllers
             else
             {
                 ViewBag.GameEnd = true;
-                ViewBag.Winner = WarGame.Player1CardsCount > 0 ? "Player 2" : "Player 1";
+                ViewBag.Winner = WarGame.Player1CardsCount > 0 ? "Player 1" : "Player 2";
                 return View("WarEnd");
             }
         }
@@ -73,8 +77,26 @@ namespace Web_Cards.Controllers
             return $"{(winner == 1 ? "You" : "The Computer")} won this round";
         }
 
-        public ActionResult War()
+        public ActionResult War(string savename = "", string type = "")
         {
+            ViewBag.Manager = m;
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                if (type == "war-load-game")
+                {
+                    WarGame.LoadState( m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"), m.GetGamesForUser(User.Identity.GetUserId())[savename]) );
+                }
+                else if (type == "war-save-game")
+                {
+                    byte[] data = WarGame.SaveState();
+                    m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("War"), User.Identity.GetUserId(), savename);
+                }
+                return View(WarGame);
+            }
+            else if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                return Redirect("Account/Login");
+            }
             return View(WarGame);
         }
 
@@ -84,8 +106,25 @@ namespace Web_Cards.Controllers
             return "War Reset ok";
         }
 
-        public ActionResult BlackJack()
+        public ActionResult BlackJack(string savename="", string type="")
         {
+            ViewBag.Manager = m;
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                if (type == "bj-load-game")
+                {
+                    bjs.LoadState(m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("Blackjack"), m.GetGamesForUser(User.Identity.GetUserId())[savename]));
+                }
+                else if (type == "bj-save-game")
+                {
+                    byte[] data = bjs.SaveState(1);
+                    m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("Blackjack"), User.Identity.GetUserId(), savename);
+                }
+            }
+            else if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                return Redirect("Account/Login");
+            }
             if (!bjRoundStarted)
             {
                 bjs.DealerDealFirstCardSet();
@@ -99,7 +138,6 @@ namespace Web_Cards.Controllers
                 }
                 bjRoundStarted = true;
             }
-
             return View(bjs);
         }
 

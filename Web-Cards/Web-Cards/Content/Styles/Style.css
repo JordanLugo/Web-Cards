@@ -23,14 +23,16 @@ nav {
     min-height: 100vh;
 }
 
-nav > ul > li {
+nav > ul > li,
+form > ul > li {
     text-decoration: none;
     margin: 40px 5px 40px 5px;
     list-style-type: none;
     margin-right:50px
     
 }
-nav > ul > li > a {
+nav > ul > li > a,
+form > ul > li > a{
     text-decoration: none;
     border: 2px solid transparent;
     border-top: 2px double #bbb;
@@ -39,13 +41,17 @@ nav > ul > li > a {
 }
 
 nav > ul > li > a:link,
-nav > ul > li > a:visited {
+nav > ul > li > a:visited,
+form > ul > li > a:link,
+form > ul > li > a:visited{
     color: #bbb;
     text-decoration: none;
 }
 
 nav > ul > li > a:hover,
-nav > ul > li > a:active {
+nav > ul > li > a:active,
+form > ul > li > a:hover,
+form > ul > li > a:active{
     color: #fff;
     border-left: 2px double #fff;
     border-bottom: 2px double #fff;
@@ -69,15 +75,6 @@ header {
 #enemy-area-war {
     display: inline-block;
     margin-right: 50px;
-}
-
-
-#player-area-bj {
-    
-}
-
-#enemy-area-bj {
-    
 }
 
 .adjusted-area {
@@ -153,7 +150,6 @@ header {
     text-align: right;
 }
 
-
 /*time to get FANCY*/
 .win-warning {
     animation-name: win-warning-anim;
@@ -207,4 +203,78 @@ header {
 
 .game-title {
     text-align: center;
+}
+.form-horizontal .control-label,
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.form-horizontal .form-group {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.form-horizontal{
+    width: 25%;
+}
+
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after {
+    display: compact;
+    content: " ";
+}
+
+.form-horizontal .form-group:after {
+    clear: both;
+}
+
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after {
+    display: compact;
+    content: " ";
+}
+
+.form-horizontal .form-group:after {
+    clear: both;
+}
+
+@media (min-width: 768px) {
+.form-horizontal .control-label {
+    text-align: right;
+}
+}
+.spicy {
+    color: white;
+    padding: 20px;
+    border: 1px double white;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    animation-name: spicy-anim;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(.8,0,.2,1);
+}
+
+@keyframes spicy-anim {
+    50% {
+        text-shadow: 0px 0px 0px yellow;
+    }
+    100% {
+        text-shadow: 0px 0px 0px yellow;
+        color: red;
+        border: 1px solid red;
+        border-top-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+    }
 }
