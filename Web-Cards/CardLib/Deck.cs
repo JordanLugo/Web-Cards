@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CardsLib
 {
+    [Serializable]
     /// <summary>
     /// Represents a collection of Cards
     /// Could be an actual deck or a hand of cards

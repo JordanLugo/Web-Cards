@@ -17,6 +17,26 @@
     <div class="" id="ghost-button" style="display: none;">Waiting...</div>
     <div class="button" id="reset-button" style="display: none">New Game</div>
 </div>
+<div>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <input type="hidden" value="war-save-game" name="type" />
+            <label>Enter a Save name to save as: </label>
+            <input type="text" value="SaveName" name="savename" />
+            <input type="submit" value="Save Game" name="save" />
+        }
+    </div>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <input type="hidden" value="war-load-game" name="type" />
+            <label>Enter a Save name to load from: </label>
+            <input type="text" value="SaveGameName" name="savename" />
+            <input type="submit" value="Load Game" name="save" />
+        }
+    </div>
+</div>
 <script>
     $("#draw-button").click(function () {
         $.ajax({ //request card info

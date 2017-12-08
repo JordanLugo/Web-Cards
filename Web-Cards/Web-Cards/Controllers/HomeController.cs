@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using CardsLib;
 using Blackjack;
+using DatabaseManager;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Web_Cards.Controllers
 {
@@ -14,6 +17,7 @@ namespace Web_Cards.Controllers
 
 		static WarSetup WarGame = new WarSetup();
         static BlackjackSetup bjs = new BlackjackSetup(1);
+        static Manager m = new Manager();
         static bool bjRoundStarted = false;
         public ActionResult Index()
         {
@@ -73,8 +77,24 @@ namespace Web_Cards.Controllers
             return $"{(winner == 1 ? "You" : "The Computer")} won this round";
         }
 
-        public ActionResult War()
+        public ActionResult War(string savename = "", string type = "")
         {
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                if (type == "war-load-game")
+                {
+                    WarGame.LoadState( m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"), m.GetGamesForUser(User.Identity.GetUserId())[savename]) );
+                }
+                else if (type == "war-save-game")
+                {
+                    byte[] data = WarGame.SaveState();
+                    m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("War"), User.Identity.GetUserId(), savename);
+                }
+            }
+            else if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                return Redirect("Account/Login");
+            }
             return View(WarGame);
         }
 

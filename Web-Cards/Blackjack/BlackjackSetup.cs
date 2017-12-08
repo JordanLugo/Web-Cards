@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack
 {
+    [Serializable]
     public class BlackjackSetup
     {
         private Deck drawDeck = new Deck();
