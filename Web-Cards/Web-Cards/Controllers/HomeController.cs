@@ -49,7 +49,7 @@ namespace Web_Cards.Controllers
             else
             {
                 ViewBag.GameEnd = true;
-                ViewBag.Winner = WarGame.Player1CardsCount > 0 ? "Player 2" : "Player 1";
+                ViewBag.Winner = WarGame.Player1CardsCount > 0 ? "Player 1" : "Player 2";
                 return View("WarEnd");
             }
         }
