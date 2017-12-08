@@ -79,6 +79,7 @@ namespace Web_Cards.Controllers
 
         public ActionResult War(string savename = "", string type = "")
         {
+            ViewBag.Manager = m;
             if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
             {
                 if (type == "war-load-game")
@@ -90,6 +91,7 @@ namespace Web_Cards.Controllers
                     byte[] data = WarGame.SaveState();
                     m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("War"), User.Identity.GetUserId(), savename);
                 }
+                return View(WarGame);
             }
             else if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
             {
@@ -104,8 +106,25 @@ namespace Web_Cards.Controllers
             return "War Reset ok";
         }
 
-        public ActionResult BlackJack()
+        public ActionResult BlackJack(string savename="", string type="")
         {
+            ViewBag.Manager = m;
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                if (type == "bj-load-game")
+                {
+                    bjs.LoadState(m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("Blackjack"), m.GetGamesForUser(User.Identity.GetUserId())[savename]));
+                }
+                else if (type == "bj-save-game")
+                {
+                    byte[] data = bjs.SaveState(1);
+                    m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("Blackjack"), User.Identity.GetUserId(), savename);
+                }
+            }
+            else if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
+            {
+                return Redirect("Account/Login");
+            }
             if (!bjRoundStarted)
             {
                 bjs.DealerDealFirstCardSet();
@@ -119,7 +138,6 @@ namespace Web_Cards.Controllers
                 }
                 bjRoundStarted = true;
             }
-
             return View(bjs);
         }
 
