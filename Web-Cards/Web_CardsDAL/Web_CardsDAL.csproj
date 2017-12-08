@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameTable.cs">
+      <DependentUpon>SaveDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveDataModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -65,37 +68,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SaveDataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="WarSetup.cs">
+    <Compile Include="SaveTable.cs">
       <DependentUpon>SaveDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
     <EntityDeploy Include="SaveDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SaveDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
     <None Include="SaveDataModel.edmx.diagram">
       <DependentUpon>SaveDataModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="SaveDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SaveDataModel.Context.cs</LastGenOutput>
       <DependentUpon>SaveDataModel.edmx</DependentUpon>
+      <LastGenOutput>SaveDataModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="SaveDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SaveDataModel.edmx</DependentUpon>
       <LastGenOutput>SaveDataModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

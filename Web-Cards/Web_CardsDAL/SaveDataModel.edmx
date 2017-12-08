@@ -4,46 +4,110 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="cardsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="WarSetup">
+      <Schema Namespace="CardsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GameTable">
           <Key>
-            <PropertyRef Name="GameID" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="GameID" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="SerializedData" Type="varbinary(max)" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" />
         </EntityType>
-        <EntityContainer Name="cardsModelStoreContainer">
-          <EntitySet Name="WarSetup" EntityType="Self.WarSetup" Schema="dbo" store:Type="Tables" />
+        <EntityType Name="SaveTable">
+          <Key>
+            <PropertyRef Name="saveId" />
+          </Key>
+          <Property Name="saveId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="savedData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="userId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="gameId" Type="int" Nullable="false" />
+          <Property Name="saveName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SaveTable_GameTable">
+          <End Role="GameTable" Type="Self.GameTable" Multiplicity="1" />
+          <End Role="SaveTable" Type="Self.SaveTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SaveTable">
+              <PropertyRef Name="gameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CardsModelStoreContainer">
+          <EntitySet Name="GameTable" EntityType="Self.GameTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaveTable" EntityType="Self.SaveTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SaveTable_GameTable" Association="Self.FK_SaveTable_GameTable">
+            <End Role="GameTable" EntitySet="GameTable" />
+            <End Role="SaveTable" EntitySet="SaveTable" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="cardsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="WarSetup">
+      <Schema Namespace="CardsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GameTable">
           <Key>
-            <PropertyRef Name="GameID" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="GameID" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="SerializedData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SaveTables" Relationship="Self.FK_SaveTable_GameTable" FromRole="GameTable" ToRole="SaveTable" />
         </EntityType>
-        <EntityContainer Name="cardsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="WarSetups" EntityType="Self.WarSetup" />
+        <EntityType Name="SaveTable">
+          <Key>
+            <PropertyRef Name="saveId" />
+          </Key>
+          <Property Name="saveId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="savedData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="userId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gameId" Type="Int32" Nullable="false" />
+          <Property Name="saveName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="GameTable" Relationship="Self.FK_SaveTable_GameTable" FromRole="SaveTable" ToRole="GameTable" />
+        </EntityType>
+        <Association Name="FK_SaveTable_GameTable">
+          <End Role="GameTable" Type="Self.GameTable" Multiplicity="1" />
+          <End Role="SaveTable" Type="Self.SaveTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SaveTable">
+              <PropertyRef Name="gameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CardsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GameTables" EntityType="Self.GameTable" />
+          <EntitySet Name="SaveTables" EntityType="Self.SaveTable" />
+          <AssociationSet Name="FK_SaveTable_GameTable" Association="Self.FK_SaveTable_GameTable">
+            <End Role="GameTable" EntitySet="GameTables" />
+            <End Role="SaveTable" EntitySet="SaveTables" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="cardsModelStoreContainer" CdmEntityContainer="cardsEntities">
-          <EntitySetMapping Name="WarSetups">
-            <EntityTypeMapping TypeName="cardsModel.WarSetup">
-              <MappingFragment StoreEntitySet="WarSetup">
-                <ScalarProperty Name="GameID" ColumnName="GameID" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="SerializedData" ColumnName="SerializedData" />
+        <EntityContainerMapping StorageEntityContainer="CardsModelStoreContainer" CdmEntityContainer="CardsEntities">
+          <EntitySetMapping Name="GameTables">
+            <EntityTypeMapping TypeName="CardsModel.GameTable">
+              <MappingFragment StoreEntitySet="GameTable">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaveTables">
+            <EntityTypeMapping TypeName="CardsModel.SaveTable">
+              <MappingFragment StoreEntitySet="SaveTable">
+                <ScalarProperty Name="saveId" ColumnName="saveId" />
+                <ScalarProperty Name="savedData" ColumnName="savedData" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="gameId" ColumnName="gameId" />
+                <ScalarProperty Name="saveName" ColumnName="saveName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

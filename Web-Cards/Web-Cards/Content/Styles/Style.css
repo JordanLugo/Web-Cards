@@ -153,7 +153,6 @@ header {
     text-align: right;
 }
 
-
 /*time to get FANCY*/
 .win-warning {
     animation-name: win-warning-anim;
@@ -208,7 +207,50 @@ header {
 .game-title {
     text-align: center;
 }
+.form-horizontal .control-label,
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
 
+.form-horizontal .form-group {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.form-horizontal{
+    width: 25%;
+}
+
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after {
+    display: compact;
+    content: " ";
+}
+
+.form-horizontal .form-group:after {
+    clear: both;
+}
+
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after {
+    display: compact;
+    content: " ";
+}
+
+.form-horizontal .form-group:after {
+    clear: both;
+}
+
+@media (min-width: 768px) {
+.form-horizontal .control-label {
+    text-align: right;
+}
+}
 .spicy {
     color: white;
     padding: 20px;
