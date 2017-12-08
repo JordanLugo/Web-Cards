@@ -85,6 +85,10 @@ header {
      margin: auto;
 }
 
+.centered-buttons {
+    align-content: center;
+}
+
 .button {
     background-color: aliceblue;
     border: 1px solid skyblue;

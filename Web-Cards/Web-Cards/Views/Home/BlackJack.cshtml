@@ -11,10 +11,10 @@
     @{Html.RenderPartial("BlackJackGetRound", Model); }
 </div>
 <div id="lower-info-area"></div>
-<div>
-    <div class="button adjusted-area" id="hit-button">Hit</div>
-    <div class="button adjusted-area" id="hold-button" style="display: inline-block">Hold</div>
-    <div class="button adjusted-area" id="reset-button" style="display: none">New round</div>
+<div class="centered-buttons">
+    <div class="button" id="hit-button" style="display: inline-block">Hit</div>
+    <div class="button" id="hold-button" style="display: inline-block">Hold</div>
+    <div class="button" id="reset-button" style="display: none">New round</div>
 </div>
 <script>
     $("#hit-button").click(function () {

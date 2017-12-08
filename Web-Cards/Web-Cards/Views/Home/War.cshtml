@@ -12,10 +12,10 @@
     @{ Html.RenderPartial("WarGetRound", Model); }
 </div>
 <div id="lower-info-area"></div>
-<div>
-    <div class="button adjusted-area" id="draw-button">Draw and Battle Cards</div>
-    <div class="adjusted-area" id="ghost-button" style="display: none;">Waiting...</div>
-    <div class="button adjusted-area" id="reset-button" style="display: none">New Game</div>
+<div class="centered-buttons">
+    <div class="button" id="draw-button" style="display: inline-block;">Draw and Battle Cards</div>
+    <div class="" id="ghost-button" style="display: none;">Waiting...</div>
+    <div class="button" id="reset-button" style="display: none">New Game</div>
 </div>
 <script>
     $("#draw-button").click(function () {
