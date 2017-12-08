@@ -71,7 +71,7 @@ namespace Blackjack
         {
             for (int cards = 0; cards < drawDeck.Cards.Count; cards++)
             {
-                if (drawDeck.Cards.ElementAt(cards).Suit.Equals("Jack") || drawDeck.Cards.ElementAt(cards).Suit.Equals("Queen") || drawDeck.Cards.ElementAt(cards).Suit.Equals("King"))
+                if (drawDeck.Cards.ElementAt(cards).Value.Equals("Jack") || drawDeck.Cards.ElementAt(cards).Value.Equals("Queen") || drawDeck.Cards.ElementAt(cards).Value.Equals("King"))
                 {
                     drawDeck.Cards.ElementAt(cards).ValueInt = 10;
                 }
