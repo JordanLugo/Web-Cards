@@ -13,10 +13,10 @@ namespace Web_CardsDAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class cardsEntities : DbContext
+    public partial class CardsEntities : DbContext
     {
-        public cardsEntities()
-            : base("name=cardsEntities")
+        public CardsEntities()
+            : base("name=CardsEntities")
         {
         }
     
@@ -25,6 +25,7 @@ namespace Web_CardsDAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<WarSetup> WarSetups { get; set; }
+        public virtual DbSet<GameTable> GameTables { get; set; }
+        public virtual DbSet<SaveTable> SaveTables { get; set; }
     }
 }

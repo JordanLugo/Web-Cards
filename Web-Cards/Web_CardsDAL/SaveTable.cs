@@ -12,10 +12,14 @@ namespace Web_CardsDAL
     using System;
     using System.Collections.Generic;
     
-    public partial class WarSetup
+    public partial class SaveTable
     {
-        public int GameID { get; set; }
-        public int UserId { get; set; }
-        public byte[] SerializedData { get; set; }
+        public long saveId { get; set; }
+        public byte[] savedData { get; set; }
+        public string userId { get; set; }
+        public int gameId { get; set; }
+        public string saveName { get; set; }
+    
+        public virtual GameTable GameTable { get; set; }
     }
 }

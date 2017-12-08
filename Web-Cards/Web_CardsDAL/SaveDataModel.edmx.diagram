@@ -4,8 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c77b3fccb5d845bc820b336cc16cc59c" Name="Diagram1">
-        <EntityTypeShape EntityType="cardsModel.WarSetup" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="7f418f57dfac440f8f67cd41780f88c4" Name="Diagram1">
+        <EntityTypeShape EntityType="CardsModel.GameTable" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CardsModel.SaveTable" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="CardsModel.FK_SaveTable_GameTable" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
