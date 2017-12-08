@@ -219,60 +219,52 @@ namespace Blackjack
         /// <returns>Returns a byte[] of the games state serialized</returns>
         public byte[] SaveState(int playerNumber)
         {
+            MemoryStream saveMemoryStream = new MemoryStream();
+            BinaryFormatter saveBinaryFormatter = new BinaryFormatter();
             Dictionary<string, object> saveData = new Dictionary<string, object>();
-            
-            saveData.Add("DrawPile", drawDeck);
+            byte[] serializedData;
+
+            saveData.Add("DrawDeck", drawDeck);
             saveData.Add("DiscardPile", discardPile);
             saveData.Add("DealersCards", dealersCards);
             saveData.Add("PlayersCards", playersCards);
             saveData.Add("NumberOfPlayers", numberOfPlayers);
             saveData.Add("CurrentPlayerTurn" , playerNumber);
 
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
+            saveBinaryFormatter.Serialize(saveMemoryStream, saveData);
 
-            bf.Serialize(stream, saveData);
-
-            byte[] serializedData = stream.ToArray();
-            stream.Close();
+            serializedData = saveMemoryStream.ToArray();
+            saveMemoryStream.Close();
 
             return serializedData;
         }
         /// <summary>
-        /// This method will load all the data from the byte[] in to the game and return the current player's turn
+        /// This method takes in a byte[] of data and deserializes it in to the current BlackjackSetup, returns the currents players turn.
         /// </summary>
-        /// <param name="data">This is the byte[] data that was serialized to save it.</param>
-        /// <returns>Returns an int of the current players turn but will return a null if the data was not the proper data to be entered.</returns>
-        public int? LoadState(byte[] data)
+        /// <param name="data">This is the byte[] data that is being deserialized in to the game.</param>
+        public int LoadState(byte[] data)
         {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
-            int currentPlayerTurn;
+            MemoryStream loadMemoryStream = new MemoryStream();
+            BinaryFormatter loadBinaryFormatter = new BinaryFormatter();
 
-            stream.Write(data, 0, data.Length);
-            stream.Position = 0;
-            Dictionary<string, object> test = (Dictionary<string, object>)bf.Deserialize(stream);
+            loadMemoryStream.Write(data, 0, data.Length);
+            loadMemoryStream.Position = 0;
+            Dictionary<string, object> loadData = (Dictionary<string, object>)loadBinaryFormatter.Deserialize(loadMemoryStream);
 
-            if (test.Keys.Contains("DrawPile") && test.Keys.Contains("DiscardPile") && test.Keys.Contains("DealersCards") && test.Keys.Contains("PlayersCards") && test.Keys.Contains("NumberOfPlayers") && test.Keys.Contains("CurrentPlayerTurn"))
+            if (loadData.Keys.Contains("NumberOfPlayers") && loadData.Keys.Contains("PlayersCards") && loadData.Keys.Contains("DealersCards") && loadData.Keys.Contains("DrawDeck") && loadData.Keys.Contains("DrawPile") && loadData.Keys.Contains("DiscardPile") && loadData.Keys.Contains("CurrentPlayerTurn"))
             {
-                drawDeck.ClearDeck();
-                discardPile.ClearDeck();
-                dealersCards.ClearDeck();
-                playersCards.ForEach(deck => deck.ClearDeck());
+                numberOfPlayers = (int)loadData["NumberOfPlayers"];
+                playersCards = loadData["PlayersCards"] as List<Deck>;
+                dealersCards = loadData["DealersCards"] as Deck;
+                drawDeck = loadData["DrawDeck"] as Deck;
+                discardPile = loadData["DiscardPile"] as Deck;
+                loadMemoryStream.Close();
 
-                drawDeck = (Deck)test.ElementAt(0).Value;
-                discardPile = (Deck)test.ElementAt(1).Value;
-                dealersCards = (Deck)test.ElementAt(2).Value;
-                playersCards = (List<Deck>)test.ElementAt(3).Value;
-                numberOfPlayers = (int)test.ElementAt(4).Value;
-                currentPlayerTurn = (int)test.ElementAt(5).Value;
-                stream.Close();
-
-                return currentPlayerTurn;
+                return (int)loadData["CurrentPlayerTurn"];
             }
             else
             {
-                return null;
+                throw new ArgumentException("The byte[] data you provided in incapable to be converted to Blackjack game data.");
             }
         }
         /// <summary>
