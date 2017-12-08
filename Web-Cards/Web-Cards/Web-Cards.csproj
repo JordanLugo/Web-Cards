@@ -263,7 +263,6 @@
     <Content Include="Content\Images\explosion.gif" />
     <Content Include="Content\Images\Playing Card home image 1.jpg" />
     <Content Include="Content\Images\winner.gif" />
-    <Content Include="Content\Scripts\Script.js" />
     <Content Include="Content\Styles\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
