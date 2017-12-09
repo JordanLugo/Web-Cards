@@ -41,7 +41,7 @@
                 {
                     items.Add(new SelectListItem { Value = kv.Key, Text = "Save: " + kv.Key });
                 }
-                items.First().Selected = true;
+                if (items.Count() > 1) { items.First().Selected = true; }
                 <label>Choose a Save name to load from: </label>
                 @Html.DropDownList("savename", items);
                 <input type="hidden" value="bj-load-game" name="type" />
