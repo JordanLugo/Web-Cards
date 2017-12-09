@@ -21,29 +21,32 @@ namespace DatabaseManager
         {
             using (CardsEntities db = new CardsEntities())
             {
-                string savedNames = "";
-                int iteration = 1;
-                foreach (SaveTable saves in db.SaveTables.Where(save => save.gameId == gameID && save.userId.Equals(user)))
+                string savedNames = saveName;
+                bool overrides = false;
+                SaveTable newGameSave = null;
+                List<SaveTable> allSavedData = db.SaveTables.Where(save => save.gameId == gameID && save.userId.Equals(user)).ToList();
+                for (int saves = 0; saves < allSavedData.Count() && !overrides; saves++)
                 {
-                    if (iteration == 1)
+                    if (allSavedData.ElementAt(saves).saveName.Equals(savedNames))
                     {
-                        savedNames = saves.saveName;
-                    }
-                    if (saves.saveName.Equals(savedNames))
-                    { 
-                        savedNames = saves.saveName + $"_({iteration++})";
+                        allSavedData.ElementAt(saves).savedData = currentGame;
+                        overrides = true;
+                        db.SaveChanges();
                     }
                 }
-                SaveTable newGameSave = new SaveTable()
+                if (!overrides)
                 {
-                    userId = user,
-                    gameId = gameID,
-                    savedData = currentGame,
-                    saveName = savedNames,
-                    GameTable = db.GameTables.Where(game => game.id == gameID).First()
-                };
-                db.SaveTables.Add(newGameSave);
-                db.SaveChanges();
+                    newGameSave = new SaveTable()
+                    {
+                        userId = user,
+                        gameId = gameID,
+                        savedData = currentGame,
+                        saveName = savedNames,
+                        GameTable = db.GameTables.Where(game => game.id == gameID).First()
+                    };
+                    db.SaveTables.Add(newGameSave);
+                    db.SaveChanges();
+                }
             }
         }
         /// <summary>
@@ -51,12 +54,12 @@ namespace DatabaseManager
         /// </summary>
         /// <param name="user">The user ID</param>
         /// <returns>Return a dictonary of strings of the names of all the save games that the user has and has that save datas id.</returns>
-        public Dictionary<string, long> GetGamesForUser(string user)
+        public Dictionary<string, long> GetGamesForUser(string user, int gameId)
         {
             Dictionary<string, long> gameInfo = new Dictionary<string, long>();
             using(CardsEntities db = new CardsEntities())
             {
-                for (int saves = 0; saves < db.SaveTables.Where(save => save.userId.Equals(user)).ToList().Count; saves++)
+                for (int saves = 0; saves < db.SaveTables.Where(save => save.userId.Equals(user) && save.gameId == gameId).ToList().Count; saves++)
                 {
                     gameInfo.Add(db.SaveTables.Where(save => save.userId.Equals(user)).ToList().ElementAt(saves).saveName, db.SaveTables.Where(save => save.userId.Equals(user)).ToList().ElementAt(saves).saveId);
                 }
