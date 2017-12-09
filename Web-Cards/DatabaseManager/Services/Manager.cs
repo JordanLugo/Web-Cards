@@ -57,11 +57,12 @@ namespace DatabaseManager
         public Dictionary<string, long> GetGamesForUser(string user, int gameId)
         {
             Dictionary<string, long> gameInfo = new Dictionary<string, long>();
-            using(CardsEntities db = new CardsEntities())
+            using (CardsEntities db = new CardsEntities())
             {
-                for (int saves = 0; saves < db.SaveTables.Where(save => save.userId.Equals(user) && save.gameId == gameId).ToList().Count; saves++)
+                List<SaveTable> savedData = db.SaveTables.Where(save => save.userId.Equals(user) && save.gameId == gameId).ToList();
+                for (int saves = 0; saves < savedData.Count; saves++)
                 {
-                    gameInfo.Add(db.SaveTables.Where(save => save.userId.Equals(user)).ToList().ElementAt(saves).saveName, db.SaveTables.Where(save => save.userId.Equals(user)).ToList().ElementAt(saves).saveId);
+                    gameInfo.Add(savedData.ElementAt(saves).saveName, savedData.ElementAt(saves).saveId);
                 }
             }
             return gameInfo;

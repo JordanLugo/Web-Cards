@@ -84,12 +84,12 @@ namespace Web_Cards.Controllers
             {
                 if (type == "war-load-game")
                 {
-                    WarGame.LoadState( m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"), m.GetGamesForUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"))[savename]) );
+                    WarGame.LoadState( m.GetGameByIdAndUser(User.Identity.GetUserId(), 1, m.GetGamesForUser(User.Identity.GetUserId(), 1)[savename]) );
                 }
                 else if (type == "war-save-game")
                 {
                     byte[] data = WarGame.SaveState();
-                    m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("War"), User.Identity.GetUserId(), savename);
+                    m.SaveToDataBase(data, 1, User.Identity.GetUserId(), savename);
                 }
                 return View(WarGame);
             }
@@ -113,12 +113,12 @@ namespace Web_Cards.Controllers
             {
                 if (type == "bj-load-game")
                 {
-                    bjs.LoadState(m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("Blackjack"), m.GetGamesForUser(User.Identity.GetUserId(),m.GetGameIdBasedOffNameOfGame("Blackjack"))[savename]));
+                    bjs.LoadState(m.GetGameByIdAndUser(User.Identity.GetUserId(), 2, m.GetGamesForUser(User.Identity.GetUserId(),2)[savename]));
                 }
                 else if (type == "bj-save-game")
                 {
                     byte[] data = bjs.SaveState(1);
-                    m.SaveToDataBase(data, m.GetGameIdBasedOffNameOfGame("Blackjack"), User.Identity.GetUserId(), savename);
+                    m.SaveToDataBase(data, 2, User.Identity.GetUserId(), savename);
                 }
             }
             else if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(savename) && !string.IsNullOrEmpty(type))
