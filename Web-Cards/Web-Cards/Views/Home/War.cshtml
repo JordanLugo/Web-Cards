@@ -37,7 +37,7 @@
             {
                 DatabaseManager.Manager m = (DatabaseManager.Manager)ViewBag.Manager;
                 List<SelectListItem> items = new List<SelectListItem>();
-                foreach (KeyValuePair<string, long> kv in m.GetGamesForUser(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)))
+                foreach (KeyValuePair<string, long> kv in m.GetGamesForUser(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity),m.GetGameIdBasedOffNameOfGame("War")))
                 {
                     items.Add(new SelectListItem { Value = kv.Key, Text = "Save: "+kv.Key });
                 }

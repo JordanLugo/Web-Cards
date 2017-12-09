@@ -84,7 +84,7 @@ namespace Web_Cards.Controllers
             {
                 if (type == "war-load-game")
                 {
-                    WarGame.LoadState( m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"), m.GetGamesForUser(User.Identity.GetUserId())[savename]) );
+                    WarGame.LoadState( m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"), m.GetGamesForUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("War"))[savename]) );
                 }
                 else if (type == "war-save-game")
                 {
@@ -113,7 +113,7 @@ namespace Web_Cards.Controllers
             {
                 if (type == "bj-load-game")
                 {
-                    bjs.LoadState(m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("Blackjack"), m.GetGamesForUser(User.Identity.GetUserId())[savename]));
+                    bjs.LoadState(m.GetGameByIdAndUser(User.Identity.GetUserId(), m.GetGameIdBasedOffNameOfGame("Blackjack"), m.GetGamesForUser(User.Identity.GetUserId(),m.GetGameIdBasedOffNameOfGame("Blackjack"))[savename]));
                 }
                 else if (type == "bj-save-game")
                 {
