@@ -23,14 +23,16 @@ nav {
     min-height: 100vh;
 }
 
-nav > ul > li {
+nav > ul > li,
+form > ul > li {
     text-decoration: none;
     margin: 40px 5px 40px 5px;
     list-style-type: none;
     margin-right:50px
     
 }
-nav > ul > li > a {
+nav > ul > li > a,
+form > ul > li > a{
     text-decoration: none;
     border: 2px solid transparent;
     border-top: 2px double #bbb;
@@ -39,13 +41,17 @@ nav > ul > li > a {
 }
 
 nav > ul > li > a:link,
-nav > ul > li > a:visited {
+nav > ul > li > a:visited,
+form > ul > li > a:link,
+form > ul > li > a:visited{
     color: #bbb;
     text-decoration: none;
 }
 
 nav > ul > li > a:hover,
-nav > ul > li > a:active {
+nav > ul > li > a:active,
+form > ul > li > a:hover,
+form > ul > li > a:active{
     color: #fff;
     border-left: 2px double #fff;
     border-bottom: 2px double #fff;
@@ -69,15 +75,6 @@ header {
 #enemy-area-war {
     display: inline-block;
     margin-right: 50px;
-}
-
-
-#player-area-bj {
-    
-}
-
-#enemy-area-bj {
-    
 }
 
 .adjusted-area {

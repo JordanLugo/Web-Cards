@@ -16,6 +16,41 @@
     <div class="button" id="hold-button" style="display: inline-block">Hold</div>
     <div class="button" id="reset-button" style="display: none">New round</div>
 </div>
+
+<div>
+    <div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            using (Html.BeginForm())
+            {
+                <input type="hidden" value="bj-save-game" name="type" />
+                <label>Enter a Save name to save as: </label>
+                <input type="text" value="SaveName" name="savename" />
+                <input type="submit" value="Save Game" name="save" />
+            }
+        }
+    </div>
+    <div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            using (Html.BeginForm())
+            {
+                DatabaseManager.Manager m = (DatabaseManager.Manager)ViewBag.Manager;
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (KeyValuePair<string, long> kv in m.GetGamesForUser(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)))
+                {
+                    items.Add(new SelectListItem { Value = kv.Key, Text = "Save: " + kv.Key });
+                }
+                items.First().Selected = true;
+                <label>Choose a Save name to load from: </label>
+                @Html.DropDownList("savename", items);
+                <input type="hidden" value="bj-load-game" name="type" />
+                <input type="submit" value="Load Game" name="save" />
+            }
+        }
+    </div>
+</div>
+
 <script>
     $("#hit-button").click(function () {
         $.ajax({

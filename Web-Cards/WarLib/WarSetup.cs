@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace WarLib
 {
+    [Serializable]
     public class WarSetup
     {
         private Deck player1StoredCards = new Deck();
@@ -193,7 +194,7 @@ namespace WarLib
             return serializedData;
         }
         /// <summary>
-        /// This method takes in a byte[] of data and deserializes it in to the current BlackjackSetup.
+        /// This method takes in a byte[] of data and deserializes it in to the current WarSEtup.
         /// </summary>
         /// <param name="data">This is the byte[] data that is being deserialized in to the game.</param>
         public void LoadState(byte[] data)
@@ -215,7 +216,7 @@ namespace WarLib
             }
             else
             {
-                throw new ArgumentException("The byte[] data you provided in incapable to be converted to Blackjack game data.");
+                throw new ArgumentException("The byte[] data you provided in incapable to be converted to War game data.");
             }
         }
 

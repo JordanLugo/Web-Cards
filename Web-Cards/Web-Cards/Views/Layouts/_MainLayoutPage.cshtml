@@ -6,7 +6,9 @@
     <title>@ViewBag.Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="~/Content/Styles/Style.css" />
-    <script src="~/Content/Scripts/Script.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
 </head>
 <body>
     <nav class="navbar-main">
